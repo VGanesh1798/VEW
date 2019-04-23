@@ -6,13 +6,19 @@ import "../CSS/search.css";
 export default class Search extends React.Component {
     render() {
         return (
-            <Container className="nav">
-                <Button>Search Artists</Button>
-                <Button>Search Releases</Button>
-                <Button>Search Songs</Button>
-                <Button>Search Labels</Button>
-                <Button>Search Playlists</Button>
-            </Container>                
+            <Container className="side">
+                <Container className="nav">
+                <Button className="navbut">Search Artists</Button>
+                <Button className="navbut">Search Releases</Button>
+                <Button className="navbut">Search Songs</Button>
+                <Button className="navbut">Search Labels</Button>
+                <Button className="navbut">Search Playlists</Button>
+                </Container> 
+                <Container className="bottom">
+                    USER
+                </Container>
+            </Container>
+
         );
     }
 }
