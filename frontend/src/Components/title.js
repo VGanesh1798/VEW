@@ -1,16 +1,10 @@
 import React from "react";
-import { Container, Header } from "semantic-ui-react";
-
-import "../CSS/title.css";
+import { Header } from "semantic-ui-react";
 
 export default class Title extends React.Component {
     render() {
         return (
-            <Container className="title">
-                <Container className="box">
-                    <Header as="h1">VEW Music Database</Header>
-                </Container>
-            </Container>
+            <Header as="h1" dividing>VEW Music Database</Header>
         );
     }
 }

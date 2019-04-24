@@ -1,19 +1,24 @@
 import React from "react";
-import { Container } from "semantic-ui-react";
+import { Container, Grid } from "semantic-ui-react";
 import Title from "../Components/title";
 import Search from "../Components/search";
 
-import "../CSS/root.css";
-
 export default class Root extends React.Component {
+
+    state = { activeItem: "Search Artist"};
+
     render() {
         return (
-            <Container className="root">
+            <Container textAlign="center" style={{marginTop: "1em"}}>
                 <Title></Title>
-                <Container className="content">
-                    <Search></Search>
-                    <Container className="page">{this.props.children}</Container>
-                </Container>
+                <Grid columns={2} divided stackable fluid>
+                    <Grid.Column floated="left" width={4}>
+                        <Search></Search>
+                    </Grid.Column>
+                    <Grid.Column width={12}>
+                        <Container>{this.props.children}</Container>
+                    </Grid.Column>
+                </Grid>
             </Container>
         );
     } 

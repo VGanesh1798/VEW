@@ -1,25 +1,20 @@
 import React from 'react';
-import { Container, Header } from "semantic-ui-react";
-
-import "../CSS/home.css";
+import { Container, Header, Grid, Segment, Divider } from "semantic-ui-react";
 
 export default class Home extends React.Component {
     render() {
         return (
-            <Container>
-                <Container className="welcome">
-                    <Header as="h1">Welcome USER</Header>
-                </Container>
-                <Container className="welcome2">
-                    <Header as="h4">Welcome to Smartify, the smarter
-                                    music database! This database allows you
-                                    to search for artists, relases, songs, playlists,
-                                    and even labels with a variety of filters ranging
-                                    from genre to hometown to birth year. After finding 
-                                    a song, you can add it to a user created playlist.
-                    </Header>
-                </Container>
-            </Container>
+            <Segment inverted>
+                <Header as="h3">Welcome USER</Header>
+                <Divider></Divider>
+                <p>
+                    Welcome to Smartify, the smart music database!
+                    Please use the menu at the left to search for
+                    artists, releases, songs, labels, or playlists 
+                    using a variety of filters such as genre, hometown,
+                    or even length!
+                </p>
+            </Segment>
         );
     }
 }

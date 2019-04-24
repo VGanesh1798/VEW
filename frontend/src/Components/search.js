@@ -1,24 +1,21 @@
 import React from "react";
-import { Container, Button } from "semantic-ui-react";
-
-import "../CSS/search.css";
+import { Segment, Menu } from "semantic-ui-react";
 
 export default class Search extends React.Component {
     render() {
         return (
-            <Container className="side">
-                <Container className="nav">
-                <Button className="navbut">Search Artists</Button>
-                <Button className="navbut">Search Releases</Button>
-                <Button className="navbut">Search Songs</Button>
-                <Button className="navbut">Search Labels</Button>
-                <Button className="navbut">Search Playlists</Button>
-                </Container> 
-                <Container className="bottom">
-                    USER
-                </Container>
-            </Container>
-
+            <Segment inverted>
+                <Menu inverted color="blue" vertical pointing>
+                    <Menu.Item name="Search Artist" /> 
+                    <Menu.Item name="Search Releases" />
+                    <Menu.Item name="Search Songs" />
+                    <Menu.Item name="Search Labels" />
+                    <Menu.Item name="Search Playlists" />
+                </Menu>
+                <Menu inverted color="red" vertical pointing>
+                    <Menu.Item name="USER" />
+                </Menu>
+            </Segment>
         );
     }
 }
