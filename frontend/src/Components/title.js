@@ -1,10 +1,12 @@
 import React from "react";
-import { Header } from "semantic-ui-react";
+import { Segment, Header } from "semantic-ui-react";
 
 export default class Title extends React.Component {
     render() {
         return (
-            <Header as="h1" dividing>VEW Music Database</Header>
+            <Segment inverted color="violet">
+                <Header as="h1" textAlign="center">VEW Music Database</Header>
+            </Segment>
         );
     }
 }

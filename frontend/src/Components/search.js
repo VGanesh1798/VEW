@@ -4,7 +4,7 @@ import { Segment, Menu } from "semantic-ui-react";
 export default class Search extends React.Component {
     render() {
         return (
-            <Segment inverted>
+            <Segment inverted color="violet" textAlign="center">
                 <Menu inverted color="blue" vertical pointing>
                     <Menu.Item name="Search Artist" /> 
                     <Menu.Item name="Search Releases" />
@@ -12,7 +12,7 @@ export default class Search extends React.Component {
                     <Menu.Item name="Search Labels" />
                     <Menu.Item name="Search Playlists" />
                 </Menu>
-                <Menu inverted color="red" vertical pointing>
+                <Menu inverted color="yellow" vertical pointing>
                     <Menu.Item name="USER" />
                 </Menu>
             </Segment>

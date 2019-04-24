@@ -1,19 +1,18 @@
 # VEW
 Database project for CS2300
 
-## Instructions
-Make sure you have nodejs and yarn installed before continuing.
+## Requirements
+This project has three primary requirements: nodejs, yarn, and mariadb. Below you will find instructions for setting up the project.
 
-### Windows
-On Windows, just look up nodejs and yarn and install them both.
+### Nodejs
+On either Windows or Linux, simply install nodejs.
 
-### Linux
-If using Ubuntu, run `sudo apt install nodejs` and `sudo apt install npm` in the command line. To get yarn, run `sudo npm install yarn -g`.
+### Yarn
+On either Windows or Linux, simply install yarn. Navigate to the frontend and backend folders and run the command `yarn` in both to install the required packages. After this, you can run `yarn start` in the frontend to start the frontend server and run  `node rest.js` in the backend to start the backend server.
 
-If using Manjaro, run `sudo pacman -S nodejs` and `sudo pacman -S yarn`.
+### MariaDB
+The hardest one to setup. Install MariaDB and on Linux, use the `mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql` to setup.
 
-## Setting up
-In the frontend folder, run `yarn` to install all the required packages.
-Run `yarn start` and if it loads up the page, everything works.
+
 
 
