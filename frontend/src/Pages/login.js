@@ -16,7 +16,7 @@ export default class Login extends React.Component {
                             </Form.Field>
                             <Form.Field inline>
                                 <label style={{color: "white"}}>Password</label>
-                                <input placeholder="Password"></input>
+                                <input type ="password" placeholder="Password"></input>
                             </Form.Field>
                         </Form>
                     </Grid.Column>

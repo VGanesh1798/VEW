@@ -3,3 +3,5 @@ CREATE TABLE User (
     Password    varchar(20),
     PRIMARY KEY (Username)
 );
+
+DROP TABLE User;
