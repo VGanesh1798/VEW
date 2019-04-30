@@ -2,10 +2,17 @@ import React from 'react';
 import { Container, Header, Grid, Segment, Divider } from "semantic-ui-react";
 
 export default class Home extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: "Guest"
+        }
+    }
+
     render() {
         return (
             <Segment inverted>
-                <Header as="h3">Welcome USER</Header>
+                <Header as="h3">Welcome, {this.state.username}!</Header>
                 <Divider></Divider>
                 <p>
                     Welcome to Smartify, the smart music database!

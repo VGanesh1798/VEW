@@ -5,6 +5,7 @@ import Root from './Pages/root';
 import Login from './Pages/login';
 import Home from './Pages/home';
 import Artist from './Pages/artist';
+import ArtistSearch from './Pages/artistsearch';
 import Create from './Pages/create';
 
 export default class App extends Component {
@@ -16,6 +17,7 @@ export default class App extends Component {
           <Route path="/create" render={props => <Create {...props} />} />
           <Route path="/home" render={props => <Home {...props} />} />
           <Route path="/artist" render={props => <Artist {...props} />} />
+          <Route path="/artistsearch" render={props => <ArtistSearch {...props} />} />
         </Root>
       </BrowserRouter>
     );

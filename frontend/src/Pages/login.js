@@ -1,18 +1,32 @@
 import React from "react";
-import { Form, Header, Segment, Button, Divider, Grid, Label } from "semantic-ui-react";
+import { Form, Header, Segment, Button, Divider } from "semantic-ui-react";
 
 export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             username: null,
-            password: null
+            password: null,
+            test: "Hello World!"
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.bypassLogin = this.bypassLogin.bind(this);
     }
     
+    componentDidMount() {
+        fetch('localhost:9000/users')
+        .then(res => res.json())
+        .then(
+            (result) => {
+                this.setState({
+                    test: result.items
+                });
+            }
+        )
+    }
+
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value});
     }
@@ -23,15 +37,18 @@ export default class Login extends React.Component {
         alert(this.state.username);
     }
 
-    handleClick(event) {
-        event.preventDefault();
-        alert(this.state.password);
+    handleClick() {
+        this.props.history.push('/create');
+    }
+
+    bypassLogin() {
+        this.props.history.push('/home');
     }
     
     render() {
         return (
             <Segment inverted>
-                <Header as="h3" textAlign="center">Login</Header>
+                <Header as="h3" textAlign="center">{ this.state.test }</Header>
                 <Divider></Divider>
                     <Form inverted onSubmit={this.handleSubmit}>
                         <Form.Group widths="equal">
@@ -42,6 +59,7 @@ export default class Login extends React.Component {
                     </Form>
                 <Divider></Divider>
                 <Button color="teal" onClick={this.handleClick}>Create Account</Button>
+                <Button color="teal" floated="right" onClick={this.bypassLogin}>Continue as Guest</Button>
             </Segment>
         );
     }
