@@ -33,10 +33,9 @@ def hello():
 def login():
     if request.method == 'POST':
         r = {'jac': 4098, 'snake': 4139}
-        s = request.form.get('username')
-        print(s)
+        
         print(jsonify(r))
-        return jsonify(r)
+        return jsonify(request.form)
     else:
         r = {'jac': 4098, 'sape': 4139}
         print(jsonify(r))
