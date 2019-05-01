@@ -5,9 +5,8 @@ export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: null,
-            password: null,
-            test: "Hello World!"
+            username: "",
+            password: "",
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -16,15 +15,17 @@ export default class Login extends React.Component {
     }
     
     componentDidMount() {
-        fetch('localhost:9000/users')
-        .then(res => res.json())
-        .then(
-            (result) => {
-                this.setState({
-                    test: result.items
-                });
+        console.log("Fetching from Flask")
+        fetch('http://localhost:5000/')
+        .then(r => r.json())
+        .then(r => {
+            console.log(r)
+        },
+            error => {console.log("Oops!")
+
             }
         )
+
     }
 
     handleChange(event) {
@@ -34,7 +35,12 @@ export default class Login extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        alert(this.state.username);
+        console.log("Fetching " + this.state.username + " from Flask" )
+        fetch('http://localhost:5000/login', {method: 'POST',})
+        .then(r => r.json())
+        .then(r => {
+            console.log(r)
+        })
     }
 
     handleClick() {
@@ -48,7 +54,7 @@ export default class Login extends React.Component {
     render() {
         return (
             <Segment inverted>
-                <Header as="h3" textAlign="center">{ this.state.test }</Header>
+                <Header as="h3" textAlign="center">Login</Header>
                 <Divider></Divider>
                     <Form inverted onSubmit={this.handleSubmit}>
                         <Form.Group widths="equal">
