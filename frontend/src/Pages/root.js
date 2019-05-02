@@ -11,11 +11,11 @@ export default class Root extends React.Component {
 
     render() {
         return (
-            <Container fluid style={{marginTop:"1em", width:"100%"}}>
+            <Container style={{marginTop:"1em", width:"100%"}}>
             <Segment inverted>
                     <Title></Title>
                     <Divider></Divider>
-                    <Grid columns={2} divided stackable fluid>
+                    <Grid columns={2} divided stackable fluid="true">
                         <Grid.Column floated="left" width={4}>
                             <Search></Search>
                         </Grid.Column>

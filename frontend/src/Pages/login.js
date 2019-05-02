@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Header, Segment, Button, Divider } from "semantic-ui-react";
+import axios from "axios";
 
 export default class Login extends React.Component {
     constructor(props) {
@@ -11,17 +12,10 @@ export default class Login extends React.Component {
     }
     
     componentDidMount() {
-        console.log("Fetching from Flask")
-        fetch('http://localhost:5000/')
-        .then(r => r.json())
-        .then(r => {
-            console.log(r)
-        },
-            error => {console.log("Oops!")
-
-            }
-        )
-
+        axios.get("http://localhost:5000/")
+            .then(function (response) {
+                console.log(response.data);
+            })
     }
 
     handleChange = (e) => {
@@ -32,11 +26,16 @@ export default class Login extends React.Component {
         e.preventDefault();
 
         console.log("Fetching " + this.state.username + " from Flask" )
-        fetch('http://localhost:5000/login', {method: 'POST',})
-        .then(r => r.json())
-        .then(r => {
-            console.log(r)
-        })
+        axios.post("http://localhost:5000/login", {
+                username: this.state.username,
+                password: this.state.password
+            })
+            .then( (response) => {
+                console.log(response.data);
+                if(response.data === 'Success') {
+                    this.props.history.push('/home');
+                }
+            });
     }
 
     handleClick = (e) => {
@@ -56,7 +55,7 @@ export default class Login extends React.Component {
                     <Form inverted onSubmit={this.handleSubmit}>
                         <Form.Group widths="equal">
                             <Form.Input required icon="user" label="Username" name="username" type="text" placeholder="Username" value={this.state.username} onChange={this.handleChange}/>
-                            <Form.Input required icon="lock" label="Password" name="password" type ="password" placeholder="Password"/>
+                            <Form.Input required icon="lock" label="Password" name="password" type ="password" placeholder="Password" value={this.state.password} onChange={this.handleChange}/>
                         </Form.Group>
                         <Button type="submit" color="green">Login</Button>
                     </Form>
