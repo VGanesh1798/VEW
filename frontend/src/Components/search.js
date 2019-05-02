@@ -21,11 +21,11 @@ export default class Search extends React.Component {
                 <Header inverted as="h4">Search Tools</Header>
                 <Divider></Divider>
                 <Menu inverted color="blue" vertical>
-                    <Menu.Item as={Link} to="artistsearch" name="Search Artists"/>
-                    <Menu.Item as={Link} to="release" name="Search Releases"/>
-                    <Menu.Item as={Link} to="song" name="Search Songs"/>
-                    <Menu.Item as={Link} to="label" name="Search Labels"/>
-                    <Menu.Item as={Link} to="playlist" name="Search Playlists"/>
+                    <Menu.Item as={Link} to="/search/artist" name="Search Artists"/>
+                    <Menu.Item as={Link} to="/search/release" name="Search Releases"/>
+                    <Menu.Item as={Link} to="/search/song" name="Search Songs"/>
+                    <Menu.Item as={Link} to="/search/label" name="Search Labels"/>
+                    <Menu.Item as={Link} to="/search/playlist" name="Search Playlists"/>
                 </Menu>
                 <Menu inverted color="yellow" vertical>
                     <Menu.Item as={Link} to="/home" name="Home" />

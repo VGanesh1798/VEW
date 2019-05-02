@@ -11,19 +11,21 @@ export default class Root extends React.Component {
 
     render() {
         return (
-            <Container style={{marginTop:"1em", width:"100%"}}>
+            <Container style={{ width:"100%"}}>
             <Segment inverted>
                     <Title></Title>
                     <Divider></Divider>
-                    <Grid columns={2} divided stackable fluid="true">
-                        <Grid.Column floated="left" width={4}>
+                    <Grid columns={3} stackable fluid="true">
+                        <Grid.Column>
                             <Search></Search>
                         </Grid.Column>
-                        <Grid.Column width={12}>
+                        <Grid.Column>
                             <Container>{this.props.children}</Container>
                         </Grid.Column>
+                        <Grid.Column>
+                        <Admin></Admin>
+                        </Grid.Column>
                     </Grid>
-                    <Admin floated="right"></Admin>
                     <Divider></Divider>
                     <Footer style={{bottom:"0"}}></Footer>
             </Segment>

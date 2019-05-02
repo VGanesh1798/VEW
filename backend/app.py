@@ -35,6 +35,12 @@ def create():
         db.create(username, password)
         return username
 
+@app.route('/artist', methods=['POST', 'GET'])
+def search():
+    if request.method == 'POST':
+        username = request.get_json()['name']
+        return username
+
 
 if __name__ == "__main__":
     app.run()

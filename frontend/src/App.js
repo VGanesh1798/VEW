@@ -5,10 +5,12 @@ import Root from './Pages/root';
 import Login from './Pages/login';
 import Home from './Pages/home';
 import Artist from './Pages/artist';
-import ArtistSearch from './Pages/artistsearch';
+import ArtistSearch from './Pages/Search/artist';
+import ArtistOptions from './Pages/Options/artist';
 import Create from './Pages/create';
 
 export default class App extends Component {
+
   render() {
     return (
       <BrowserRouter> 
@@ -17,7 +19,8 @@ export default class App extends Component {
           <Route path="/create" render={props => <Create {...props} />} />
           <Route path="/home" render={props => <Home {...props} />} />
           <Route path="/artist" render={props => <Artist {...props} />} />
-          <Route path="/artistsearch" render={props => <ArtistSearch {...props} />} />
+          <Route path="/search/artist" render={props => <ArtistSearch {...props} />} />
+          <Route path="/options/artist" render={props => <ArtistOptions {...props} />} />
         </Root>
       </BrowserRouter>
     );
