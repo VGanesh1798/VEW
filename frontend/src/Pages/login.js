@@ -19,7 +19,7 @@ export default class Login extends React.Component {
     }
 
     handleChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value});
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     handleSubmit = (e) => {
@@ -35,15 +35,15 @@ export default class Login extends React.Component {
                 if(response.data === 'Success') {
                     this.props.history.push('/home');
                 }
-            });
+            })
+            .catch( (error) => {
+                console.log("No user exists!");
+            })
     }
 
     handleClick = (e) => {
         if(e.target.name === 'create') {
             this.props.history.push('/create');
-        }
-        else if(e.target.name === 'bypass') {
-            this.props.history.push('/home');
         }
     }
     
@@ -61,7 +61,6 @@ export default class Login extends React.Component {
                     </Form>
                 <Divider/>
                 <Button color="teal" name="create" onClick={this.handleClick}>Create Account</Button>
-                <Button color="teal" name="bypass" floated="right" onClick={this.handleClick}>Continue as Guest</Button>
             </Segment>
         );
     }
