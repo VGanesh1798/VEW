@@ -28,7 +28,7 @@ export default class Search extends React.Component {
                     <Menu.Item as={Link} to="playlist" name="Search Playlists"/>
                 </Menu>
                 <Menu inverted color="yellow" vertical>
-                    <Menu.Item name="Home" />
+                    <Menu.Item as={Link} to="/home" name="Home" />
                     <Menu.Item as={Link} to="/" name="Logout or Return to Login"/>
                 </Menu>
             </Segment>
