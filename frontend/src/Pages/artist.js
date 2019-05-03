@@ -28,7 +28,7 @@ export default class Artist extends React.Component {
                 const blist = alist[0]
                 console.log(blist);
                 this.setState({id: blist[0], name: blist[1], year: blist[2], 
-                               town: blist[3], style: blist[4], instrument: blist[5] });
+                               town: blist[3], style: blist[4], instrument: blist[5], disbanded: blist[6] });
             })
     }
 
@@ -66,6 +66,7 @@ export default class Artist extends React.Component {
                                 <li>{this.state.town}</li>
                                 <li>{this.state.style}</li>
                                 <li>{this.state.year}</li>
+                                <li>{this.state.disbanded}</li>
                             </ul>
                         </Segment>
                     </Segment>
