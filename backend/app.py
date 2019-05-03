@@ -47,6 +47,22 @@ def search():
         records = dict(db.artistsearch(name, date, town, style, instrument))        
         return jsonify(records)
 
+@app.route('/artistlook', methods=['POST', 'GET'])
+def sender():
+        if request.method == 'POST':
+                id = request.get_json()['id']
+                print(id)
+
+                record = db.artistget(id)
+
+                return(jsonify(record))
+
+@app.route('/usergone', methods=['POST'])
+def deluser():
+        name = request.get_json()['name']
+        print(name)
+
+        return(name)
 
 if __name__ == "__main__":
     app.run()

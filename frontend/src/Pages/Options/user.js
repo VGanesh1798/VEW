@@ -1,21 +1,41 @@
 import React from "react";
-import { Segment, Header, Divider, Button } from "semantic-ui-react";
+import { Segment, Header, Divider, Button, Form } from "semantic-ui-react";
+import axios from "axios";
 
 export default class UserOptions extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            choice: ""
+            choice: "",
+            username: ""
         }
     }
 
-    handleClick = () => {
-        this.setState({choice: "remove"});
+    handleChange = (e) => {
+        this.setState({username: e.target.value});
+    }
+
+    removeSubmit = () => {
+        alert(this.state.username);
+        axios.post("http://localhost:5000/usergone", {
+            name: this.state.username
+        })
     }
 
     makeChoice = () => {
         if(this.state.choice === "remove") {
-            return <h1>Hello</h1>
+            return (
+                <Segment inverted>
+                    <Header as="h3">Remove User</Header>
+                    <Form inverted onSubmit={this.removeSubmit}>
+                        <Form.Input label="Username" name="username" placeholder="Username" value={this.state.username} onChange={this.handleChange} />
+                        <Button type="submit" color="orange">Submit</Button>
+                    </Form>
+                </Segment>
+            );
+        }
+        else if(this.state.choice ==="change") {
+            return <h1>Bye</h1>
         }
     }
 
@@ -30,8 +50,8 @@ export default class UserOptions extends React.Component {
                 </p>
                 <Divider />
                 <Segment inverted>
-                    <Button color="teal" onClick={this.handleClick}>Change User's username</Button>
-                    <Button color="red">Remove User</Button>
+                    <Button color="teal" onClick={() => this.setState({choice: "change"})}>Change User's username</Button>
+                    <Button color="red" onClick={() => this.setState({choice: "remove"})}>Remove User</Button>
                 </Segment>
                 <Divider />
                 <Segment inverted>

@@ -44,3 +44,12 @@ def artistsearch(n, y, h, s, i):
     cursor.close()
     connection.close()
     return records
+
+def artistget(i):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("select * from artist as a where a.id = {0}".format(i))
+    
+    record = cursor.fetchall()
+    print(record)
+    return record

@@ -41,10 +41,9 @@ export default class ArtistSearch extends React.Component {
 
     render() {
         const idlist = Object.keys(this.state.artlist);
-        const namelist = Object.values(this.state.artlist);
-        const outlist = namelist.map((value) =>
+        const outlist = idlist.map((value) =>
         <ol key={value} style={{fontSize:"20px"}}> 
-            <Link style={{color:"white"}} to={{pathname: "/artist", state: {artist: value} }}>{value}</Link>
+            <Link style={{color:"white"}} to={{pathname: "/artist", state: {id: value} }}>{this.state.artlist[value]}</Link>
         </ol>);
 
         return (
