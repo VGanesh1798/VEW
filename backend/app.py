@@ -38,8 +38,16 @@ def create():
 @app.route('/artist', methods=['POST', 'GET'])
 def search():
     if request.method == 'POST':
-        username = request.get_json()['name']
-        return username
+        name = request.get_json()['name']
+        date = request.get_json()['year'] if request.get_json()['year'] != '' else "0"
+        town = request.get_json()['town']
+        style = request.get_json()['style']
+        instrument = request.get_json()['instrument']
+
+        records = db.artistsearch(name, date, town, style, instrument)
+        print(records)
+        
+        return jsonify(records)
 
 
 if __name__ == "__main__":
