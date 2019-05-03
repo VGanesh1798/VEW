@@ -12,7 +12,8 @@ export default class Artist extends React.Component {
             town: "",
             style: "",
             instrument: "",
-            disbanded: ""
+            disbanded: "",
+            rating: ""
         }
     }
 
@@ -44,14 +45,29 @@ export default class Artist extends React.Component {
                 </Grid.Column>
             </Grid>
             <Divider></Divider>
-            <Grid inverted fluid="true">
+            <Grid columns={2} inverted fluid="true">
                 <Grid.Column textAlign="center">
                     <Segment inverted color="blue">
                         <Header as="h5">Releases</Header>
                         <Divider />
                     </Segment>
-                    <Segment>
-                        A
+                    <Segment inverted color="blue">
+                        <Header as="h6">Major Awards</Header>
+                    </Segment>
+                </Grid.Column>
+                <Grid.Column>
+                    <Segment inverted textAlign="center">
+                        <div style={{borderRadius:"50%", width: "100px", height:"100px", background:"#32CD32", border: "3px solid"}}>
+                            <Header as="h6">RATING: {this.state.rating}</Header>
+                        </div>
+                        <Segment inverted color="teal">
+                            <ul style={{listStyle:"none"}}>
+                                <li>{this.state.instrument}</li>
+                                <li>{this.state.town}</li>
+                                <li>{this.state.style}</li>
+                                <li>{this.state.year}</li>
+                            </ul>
+                        </Segment>
                     </Segment>
                 </Grid.Column>
             </Grid>

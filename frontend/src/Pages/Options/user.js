@@ -18,8 +18,11 @@ export default class UserOptions extends React.Component {
     removeSubmit = () => {
         alert(this.state.username);
         axios.post("http://localhost:5000/usergone", {
-            name: this.state.username
-        })
+                name: this.state.username
+            })
+            .then( (response) => {
+                console.log(response.data);
+            })
     }
 
     makeChoice = () => {

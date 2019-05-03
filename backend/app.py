@@ -36,16 +36,27 @@ def create():
         return username
 
 @app.route('/artist', methods=['POST', 'GET'])
-def search():
-    if request.method == 'POST':
-        name = request.get_json()['name']
-        date = request.get_json()['year'] if request.get_json()['year'] != '' else "0"
-        town = request.get_json()['town']
-        style = request.get_json()['style']
-        instrument = request.get_json()['instrument']
+def artsearch():
+        if request.method == 'POST':
+                name = request.get_json()['name']
+                date = request.get_json()['year'] if request.get_json()['year'] != '' else "0"
+                town = request.get_json()['town']
+                style = request.get_json()['style']
+                instrument = request.get_json()['instrument']
 
-        records = dict(db.artistsearch(name, date, town, style, instrument))        
-        return jsonify(records)
+                records = dict(db.artistsearch(name, date, town, style, instrument))        
+                return jsonify(records)
+
+@app.route('/label', methods=['POST', 'GET'])
+def labsearch():
+        if request.method == 'POST':
+                name = request.get_json()['name']
+                sup = request.get_json()['super']
+                ceo = request.get_json()['ceo']
+                date = request.get_json()['year'] if request.get_json()['year'] != '' else "0"
+
+                records = dict(db.labelsearch(name, sup, ceo, date))
+                return jsonify(records)
 
 @app.route('/artistlook', methods=['POST', 'GET'])
 def sender():
@@ -61,8 +72,8 @@ def sender():
 def deluser():
         name = request.get_json()['name']
         print(name)
-
-        return(name)
+        db.deluser(name)
+        return "Success"
 
 if __name__ == "__main__":
-    app.run()
+        app.run()
