@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Segment, Form, Header, Divider, Button, Container } from "semantic-ui-react";
+import { Segment, Form, Header, Divider, Button, Container, List, Grid } from "semantic-ui-react";
 import axios from "axios";
 
 export default class ArtistSearch extends React.Component {
@@ -41,11 +41,13 @@ export default class ArtistSearch extends React.Component {
 
     render() {
         const outlist = this.state.artlist.map((value) =>
-        <li>{value}</li>);
+        <List as={Link} to={{ pathname: "/artist", state: {artist: value} }}>{value}</List>);
 
         return (
             <Segment inverted>
-                <Header as="h3">Search Artist</Header>
+                <Grid inverted divided fluid="true" columns={2}>
+                <Grid.Column>
+                <Header inverted as="h3">Search Artist</Header>
                 <p>
                     Please enter values for querying for an artist.
                     You may choose to enter values in all fields, or
@@ -61,11 +63,14 @@ export default class ArtistSearch extends React.Component {
                     <Form.Input label="Instrument" name="instrument" placeholder="Instrument" type="text" value={this.state.instrument} onChange={this.handleChange}/>
                     <Button type="submit" color="green">Search!</Button>
                 </Form>
-                <Divider/>
-                <Header as="h4">Results</Header>
+                </Grid.Column>
+                <Grid.Column>
+                <Header inverted as="h3">Results</Header>
                 <Container textAlign="center">
                     {outlist}
                 </Container>
+                </Grid.Column>
+                </Grid>
             </Segment>
         );
     }

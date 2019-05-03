@@ -11,25 +11,29 @@ export default class Root extends React.Component {
 
     render() {
         return (
-            <Container style={{ width:"100%"}}>
-            <Segment inverted>
-                    <Title></Title>
-                    <Divider></Divider>
-                    <Grid columns={3} stackable fluid="true">
-                        <Grid.Column>
-                            <Search></Search>
-                        </Grid.Column>
-                        <Grid.Column>
-                            <Container>{this.props.children}</Container>
-                        </Grid.Column>
-                        <Grid.Column>
-                        <Admin></Admin>
-                        </Grid.Column>
-                    </Grid>
-                    <Divider></Divider>
-                    <Footer style={{bottom:"0"}}></Footer>
-            </Segment>
-            </Container>
+            <div style={{minHeight:"100vh", display:'flex'}}>
+                <Segment inverted>
+                    <div style={{paddingBottom:'60px'}}>
+                        <Title />
+                        <Divider />
+                        <Grid columns={3} fluid="true" stackable centered>
+                            <Grid.Column>
+                                <Search />
+                            </Grid.Column>
+                            <Grid.Column>
+                                <Container>{this.props.children}</Container>
+                            </Grid.Column>
+                            <Grid.Column>
+                            <Admin />
+                            </Grid.Column>
+                        </Grid>
+                    </div>
+                    <div style={{position:'absolute', bottom:'0', width:'100%'}}>
+                        <Divider />
+                        <Footer />
+                    </div>
+                </Segment>
+            </div>
         );
     } 
 }
