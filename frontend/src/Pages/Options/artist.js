@@ -5,7 +5,7 @@ export default class ArtistOptions extends React.Component {
     render() {
         return (
             <Segment inverted>
-                <Header as="h3">Artist Options</Header>
+                <Header as="h2">Artist Options</Header>
             </Segment>
         );
     }

@@ -17,13 +17,13 @@ export default class Root extends React.Component {
                         <Title />
                         <Divider />
                         <Grid columns={3} fluid="true" stackable centered>
-                            <Grid.Column>
+                            <Grid.Column floated="left" width={3}>
                                 <Search />
                             </Grid.Column>
                             <Grid.Column>
                                 <Container>{this.props.children}</Container>
                             </Grid.Column>
-                            <Grid.Column>
+                            <Grid.Column floated="right" width={3}>
                             <Admin />
                             </Grid.Column>
                         </Grid>

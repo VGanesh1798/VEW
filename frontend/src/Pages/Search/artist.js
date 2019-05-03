@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Segment, Form, Header, Divider, Button, Container, List, Grid } from "semantic-ui-react";
+import { Segment, Form, Header, Divider, Button, Grid } from "semantic-ui-react";
 import axios from "axios";
 
 export default class ArtistSearch extends React.Component {
@@ -12,7 +12,7 @@ export default class ArtistSearch extends React.Component {
             town: "",
             style: "",
             instrument: "",
-            artlist: []
+            artlist: {}
         }
     }
 
@@ -29,9 +29,9 @@ export default class ArtistSearch extends React.Component {
                 instrument: this.state.instrument
             })
             .then( (response) => {
-                console.log(response.data);
                 this.setState({artlist: response.data});
-                alert("Received " + this.state.artlist.length + " results.")
+                console.log(this.state.artlist);
+                alert("Received " + Object.keys(this.state.artlist).length + " results.")
             })
     }
 
@@ -40,14 +40,18 @@ export default class ArtistSearch extends React.Component {
     }
 
     render() {
-        const outlist = this.state.artlist.map((value) =>
-        <List as={Link} to={{ pathname: "/artist", state: {artist: value} }}>{value}</List>);
+        const idlist = Object.keys(this.state.artlist);
+        const namelist = Object.values(this.state.artlist);
+        const outlist = namelist.map((value) =>
+        <ol key={value} style={{fontSize:"20px"}}> 
+            <Link style={{color:"white"}} to={{pathname: "/artist", state: {artist: value} }}>{value}</Link>
+        </ol>);
 
         return (
             <Segment inverted>
                 <Grid inverted divided fluid="true" columns={2}>
                 <Grid.Column>
-                <Header inverted as="h3">Search Artist</Header>
+                <Header inverted as="h2">Search Artist</Header>
                 <p>
                     Please enter values for querying for an artist.
                     You may choose to enter values in all fields, or
@@ -56,7 +60,7 @@ export default class ArtistSearch extends React.Component {
                 </p>
                 <Divider/>
                 <Form inverted onSubmit={this.handleSubmit}>
-                    <Form.Input label="Name" name="name" placeholder="Name" type="text" value={this.state.name} onChange={this.handleChange}/>
+                    <Form.Input label="Name (Enter part of name to receive partial matches)" name="name" placeholder="Name" type="text" value={this.state.name} onChange={this.handleChange}/>
                     <Form.Input label="Year Born or Founded" name="year" placeholder="Year" type="number" value={this.state.year} onChange={this.handleChange}/>
                     <Form.Input label="Hometown" name="town" placeholder="Hometown" type="text" value={this.state.hometown} onChange={this.handleChange}/>
                     <Form.Input label="Style" name="style" placeholder="Style" type="text" value={this.state.style} onChange={this.handleChange}/>
@@ -65,10 +69,15 @@ export default class ArtistSearch extends React.Component {
                 </Form>
                 </Grid.Column>
                 <Grid.Column>
-                <Header inverted as="h3">Results</Header>
-                <Container textAlign="center">
+                <Header inverted as="h2">Results</Header>
+                <p>
+                    After results are displayed, you can click on an
+                    artist's name to be taken to their profile page.
+                </p>
+                <Divider />
+                <Segment inverted textAlign="center">
                     {outlist}
-                </Container>
+                </Segment>
                 </Grid.Column>
                 </Grid>
             </Segment>

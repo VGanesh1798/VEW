@@ -44,9 +44,7 @@ def search():
         style = request.get_json()['style']
         instrument = request.get_json()['instrument']
 
-        records = db.artistsearch(name, date, town, style, instrument)
-        print(records)
-        
+        records = dict(db.artistsearch(name, date, town, style, instrument))        
         return jsonify(records)
 
 
