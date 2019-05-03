@@ -1,11 +1,7 @@
 import React from "react";
-import { Segment, Form, Header, Divider, Button } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { Segment, Form, Header, Divider, Button, Container } from "semantic-ui-react";
 import axios from "axios";
-
-const options = [
-    { key: 'm', text: 'Male', value: 'male'},
-    { key: 'f', text: 'Female', value: 'female'}
-];
 
 export default class ArtistSearch extends React.Component {
     constructor(props) {
@@ -15,7 +11,8 @@ export default class ArtistSearch extends React.Component {
             year: "",
             town: "",
             style: "",
-            instrument: ""
+            instrument: "",
+            artlist: []
         }
     }
 
@@ -33,7 +30,8 @@ export default class ArtistSearch extends React.Component {
             })
             .then( (response) => {
                 console.log(response.data);
-                alert(response.data);
+                this.setState({artlist: response.data});
+                alert("Received " + this.state.artlist.length + " results.")
             })
     }
 
@@ -42,6 +40,9 @@ export default class ArtistSearch extends React.Component {
     }
 
     render() {
+        const outlist = this.state.artlist.map((value) =>
+        <li>{value}</li>);
+
         return (
             <Segment inverted>
                 <Header as="h3">Search Artist</Header>
@@ -60,6 +61,11 @@ export default class ArtistSearch extends React.Component {
                     <Form.Input label="Instrument" name="instrument" placeholder="Instrument" type="text" value={this.state.instrument} onChange={this.handleChange}/>
                     <Button type="submit" color="green">Search!</Button>
                 </Form>
+                <Divider/>
+                <Header as="h4">Results</Header>
+                <Container textAlign="center">
+                    {outlist}
+                </Container>
             </Segment>
         );
     }
