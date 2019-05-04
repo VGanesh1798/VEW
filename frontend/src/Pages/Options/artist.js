@@ -1,12 +1,37 @@
 import React from "react";
 import { Segment, Header, Divider, Button, Form } from "semantic-ui-react";
+import axios from "axios";
 
 export default class ArtistOptions extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             choice: "",
+            name: "",
+            year: "",
+            town: "",
+            style: "",
+            instrument: "",
         }
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+
+        axios.post("http://localhost:5000/add/artist", {
+                name: this.state.name,
+                year: this.state.year,
+                town: this.state.town,
+                style: this.state.style,
+                instrument: this.state.instrument
+            })
+            .then( (response) => {
+
+            })
+    }
+
+    handleChange = (e) => {
+        this.setState({[e.target.name]: e.target.value})
     }
 
     makeChoice = () => {
@@ -14,8 +39,13 @@ export default class ArtistOptions extends React.Component {
             return (
                 <Segment inverted>
                     <Header as="h3">Add Artist</Header>
-                    <Form inverted>
-                        <Form.Input label="Name" />
+                    <Form inverted onSubmit={this.handleSubmit}>
+                        <Form.Input label="Name" name="name" placeholder="Name" required value={this.state.name} onChange={this.handleChange} />
+                        <Form.Input label="Year Born or Founded" name="year" placeholder="Year" type="number" value={this.state.year} onChange={this.handleChange} />
+                        <Form.Input label="Hometown" name="town" placeholder="Hometown" value={this.state.town} onChange={this.handleChange} />
+                        <Form.Input label="Style" name="style" placeholder="Style" value={this.state.style} onChange={this.handleChange} />
+                        <Form.Input label="Instrument" name="instrument" placeholder="Instrument" value={this.state.instrument} onChange={this.handleChange}/>
+                        <Button type="submit" color="green">Submit</Button>
                     </Form>
                 </Segment>
             );
@@ -34,6 +64,13 @@ export default class ArtistOptions extends React.Component {
                 </Segment>
             );
         }
+        else if(this.state.choice === "award") {
+            return (
+                <Segment inverted>
+                    <Header as="h3">Artist Awards</Header>
+                </Segment>
+            );
+        }
     }
 
     render() {
@@ -49,6 +86,7 @@ export default class ArtistOptions extends React.Component {
                     <Button color="green" onClick={() => this.setState({choice: "add"})}>Add Artist</Button>
                     <Button color="teal" onClick={() =>this.setState({choice: "change"})}>Modify Artist</Button>
                     <Button color="red" onClick={() => this.setState({choice: "remove"})}>Delete Artist</Button>
+                    <Button color="green" floated="right" onClick={() => this.setState({choice: "award"})}>Add Award for Artist</Button>
                 </Segment>
                 <Divider />
                 <Segment inverted>

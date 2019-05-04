@@ -15,8 +15,9 @@ export default class UserOptions extends React.Component {
         this.setState({username: e.target.value});
     }
 
-    removeSubmit = () => {
-        alert(this.state.username);
+    removeSubmit = (e) => {
+        e.preventDefault();
+
         axios.post("http://localhost:5000/usergone", {
                 name: this.state.username
             })

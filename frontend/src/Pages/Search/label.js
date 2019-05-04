@@ -29,6 +29,7 @@ export default class LabelSearch extends React.Component {
             .then( (response) => {
                 this.setState({lablist: response.data});
                 console.log(this.state.lablist);
+                alert("Received: " + Object.keys(this.state.lablist).length + " results.");
             })
     }
 
@@ -45,7 +46,7 @@ export default class LabelSearch extends React.Component {
 
         return (
             <Segment inverted>
-                <Grid inverted divided fluid columns={2}> 
+                <Grid inverted divided columns={2}> 
                     <Grid.Column>
                         <Header inverted as="h3">Search Label</Header>
                         <p>

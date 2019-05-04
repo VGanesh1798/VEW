@@ -18,7 +18,7 @@ export default class Artist extends React.Component {
     }
 
     componentDidMount() {
-        if(this.props.location.state == null) {
+        if(this.props.location.state === null) {
             return;
         }
         const {id} = this.props.location.state;
@@ -37,14 +37,14 @@ export default class Artist extends React.Component {
         return (
           <Segment inverted>
             <Grid inverted columns={2} fluid="true">
-                <Grid.Column inverted>
+                <Grid.Column>
                     <Header inverted as="h2">{this.state.name}</Header>
                 </Grid.Column>
                 <Grid.Column floated='right' textAlign="center">
                     <Header inverted as="h3">ID: {this.state.id}</Header>
                 </Grid.Column>
             </Grid>
-            <Divider></Divider>
+            <Divider />
             <Grid columns={2} inverted fluid="true">
                 <Grid.Column textAlign="center">
                     <Segment inverted color="blue">

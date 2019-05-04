@@ -8,26 +8,6 @@ def driver():
                                 database = "music")
     return connection
 
-def login():
-    connection = driver()
-    cursor = connection.cursor()
-
-    cursor.execute("select * from users;")
-    records = cursor.fetchall()
-    cursor.close()
-    connection.close()
-    return records
-
-def create(username, password):
-    connection = driver()
-    cursor = connection.cursor()
-
-    cursor.execute("insert into users values (%s, %s);", (username, password))
-
-    cursor.close()
-    connection.commit()
-    connection.close()
-    return "A"
 
 def artistsearch(n, y, h, s, i):
     connection = driver()
@@ -45,36 +25,35 @@ def artistsearch(n, y, h, s, i):
     connection.close()
     return records
 
-def labelsearch(n, s, c, y):
-    connection = driver()
-    cursor = connection.cursor()
-    cursor.execute("""select labelname, super from label as l where
-                    (l.labelname like '{0}%' or '{0}' = '') and
-                    (l.super like '{1}%' or '{1}' = '') and
-                    (l.ceo like '{2}%' or '{2}' = '') and
-                    (l.foundingdate = {3} or {3} = '0');"""
-                    .format(n, s, c, y))
-    
-    records = cursor.fetchall()
-    cursor.close()
-    connection.close()
-    return records
 
 def artistget(i):
     connection = driver()
     cursor = connection.cursor()
-    cursor.execute("select * from artist as a where a.id = {0}".format(i))
+    cursor.execute("select * from artist as a where a.id = {0};".format(i))
     
     record = cursor.fetchall()
     print(record)
+    cursor.close()
+    connection.close()
     return record
 
-def deluser(n):
+
+def maxid():
     connection = driver()
     cursor = connection.cursor()
-    cursor.execute("delete from users where userid = '{0}';".format(n))
+    cursor.execute("select max(id) from artist;")
+    record = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return record[0][0]
+
+
+def add(d, n, y, h, s, i):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("insert into artist values({0}, '{1}', {2}, '{3}', '{4}', '{5}');".format(d, n, y, h, s, i))
 
     cursor.close()
     connection.commit()
     connection.close()
-    return
+    return "Succes"
