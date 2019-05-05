@@ -38,6 +38,17 @@ def artistget(i):
     return record
 
 
+def award(i):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("select awardname, yearwon from artistawards where id = {0};".format(i))
+
+    record = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return record 
+
+
 def maxid():
     connection = driver()
     cursor = connection.cursor()
@@ -56,4 +67,4 @@ def add(d, n, y, h, s, i):
     cursor.close()
     connection.commit()
     connection.close()
-    return "Succes"
+    return "Success"

@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 import psycopg2
 from json import *
 from flask_cors import CORS, cross_origin
-import labdb, userdb, artdb
+import labdb, userdb, artdb, reldb
 
 app = Flask(__name__)
 CORS(app)
@@ -64,6 +64,8 @@ def sender():
                 id = request.get_json()['id']
 
                 record = artdb.artistget(id)
+                record.append(reldb.relget(id))
+                record.append(artdb.award(id))
                 return(jsonify(record))
 
 @app.route('/labget', methods=['POST'])

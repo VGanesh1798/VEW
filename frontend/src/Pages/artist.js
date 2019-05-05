@@ -1,5 +1,5 @@
 import React from "react";
-import { Segment, Header, Divider, Grid } from "semantic-ui-react";
+import { Segment, Header, Divider, Grid, Container } from "semantic-ui-react";
 import axios from "axios";
 
 export default class Artist extends React.Component {
@@ -13,7 +13,9 @@ export default class Artist extends React.Component {
             style: "",
             instrument: "",
             disbanded: "",
-            rating: ""
+            rating: "",
+            relist: [],
+            awlist: []
         }
     }
 
@@ -26,13 +28,25 @@ export default class Artist extends React.Component {
             .then( (response) => {
                 const alist = response.data;
                 const blist = alist[0]
-                console.log(blist);
+                this.setState({relist: alist[1], awlist: alist[2]});
                 this.setState({id: blist[0], name: blist[1], year: blist[2], 
-                               town: blist[3], style: blist[4], instrument: blist[5], disbanded: blist[6] });
-            })
+                               town: blist[3], style: blist[4], 
+                               instrument: blist[5], 
+                               disbanded: blist[6]});
+                });
     }
 
     render() {
+
+        const songlist = this.state.relist.map((value) =>
+        <ol key={value} style={{fontSize:"15px"}}>
+            {value[1]}
+        </ol>);
+
+        const awardlist = this.state.awlist.map((value) =>
+        <ol key={value} style={{fontSize:"15px"}}>
+            {value[0]}{value[1]}
+        </ol>);
 
         return (
           <Segment inverted>
@@ -48,11 +62,17 @@ export default class Artist extends React.Component {
             <Grid columns={2} inverted fluid="true">
                 <Grid.Column textAlign="center">
                     <Segment inverted color="blue">
-                        <Header as="h5">Releases</Header>
+                        <Header as="h3">Releases</Header>
                         <Divider />
+                        <Container textAlign="left">
+                            {songlist}
+                        </Container>
                     </Segment>
                     <Segment inverted color="blue">
-                        <Header as="h6">Major Awards</Header>
+                        <Header as="h3">Major Awards</Header>
+                        <Container textAlign="left">
+                            {awardlist}
+                        </Container>
                     </Segment>
                 </Grid.Column>
                 <Grid.Column>
@@ -60,7 +80,7 @@ export default class Artist extends React.Component {
                         <div style={{borderRadius:"50%", width: "100px", height:"100px", background:"#32CD32", border: "3px solid"}}>
                             <Header as="h6">RATING: {this.state.rating}</Header>
                         </div>
-                        <Segment inverted color="teal">
+                        <Segment inverted color="teal" textAlign="left">
                             <ul style={{listStyle:"none"}}>
                                 <li>{this.state.instrument}</li>
                                 <li>{this.state.town}</li>

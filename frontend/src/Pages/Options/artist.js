@@ -86,7 +86,7 @@ export default class ArtistOptions extends React.Component {
                     <Button color="green" onClick={() => this.setState({choice: "add"})}>Add Artist</Button>
                     <Button color="teal" onClick={() =>this.setState({choice: "change"})}>Modify Artist</Button>
                     <Button color="red" onClick={() => this.setState({choice: "remove"})}>Delete Artist</Button>
-                    <Button color="green" floated="right" onClick={() => this.setState({choice: "award"})}>Add Award for Artist</Button>
+                    <Button color="green" onClick={() => this.setState({choice: "award"})}>Add Award for Artist</Button>
                 </Segment>
                 <Divider />
                 <Segment inverted>
