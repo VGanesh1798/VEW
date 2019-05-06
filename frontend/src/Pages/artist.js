@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Segment, Header, Divider, Grid, Container } from "semantic-ui-react";
 import axios from "axios";
 
@@ -40,12 +41,12 @@ export default class Artist extends React.Component {
 
         const songlist = this.state.relist.map((value) =>
         <ol key={value} style={{fontSize:"15px"}}>
-            {value[1]}
+            <Link style={{color:"white"}} to={{pathname: "/release", state: {id: this.state.id, name: this.state.name, release: value[1]} }}>{value[1]}</Link>
         </ol>);
 
         const awardlist = this.state.awlist.map((value) =>
         <ol key={value} style={{fontSize:"15px"}}>
-            {value[0]}{value[1]}
+            {value[0]}<p>    </p>{value[1]}
         </ol>);
 
         return (
@@ -77,9 +78,9 @@ export default class Artist extends React.Component {
                 </Grid.Column>
                 <Grid.Column>
                     <Segment inverted textAlign="center">
-                        <div style={{borderRadius:"50%", width: "100px", height:"100px", background:"#32CD32", border: "3px solid"}}>
+                        <Segment inverted color="pink">
                             <Header as="h6">RATING: {this.state.rating}</Header>
-                        </div>
+                        </Segment>
                         <Segment inverted color="teal" textAlign="left">
                             <ul style={{listStyle:"none"}}>
                                 <li>{this.state.instrument}</li>

@@ -19,3 +19,30 @@ def relget(i):
     cursor.close()
     connection.close()
     return records
+
+def relsearch(i, n, g, t, d):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("""select a.ID, name, releasename from releases as r, artist as a 
+                    where r.id = a.id and (a.name like '{4}%' or '{4}' = '') and
+                    (r.releasename like '{0}%' or '{0}' = '') and
+                    (r.genre like '{1}%' or '{1}' = '') and
+                    (r.releasetype like '{2}%' or '{2}' = '') and
+                    (r.releaseyr = {3} or {3} = '0');"""
+                    .format(n, g, t, d, i))
+    
+    records = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return records
+
+
+def relload(i, n, r):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("select * from releases where id = {0} and releasename = '{1}';".format(i, r))
+
+    records = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return records

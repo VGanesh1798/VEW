@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 import psycopg2
 from json import *
 from flask_cors import CORS, cross_origin
-import labdb, userdb, artdb, reldb
+import labdb, userdb, artdb, reldb, songdb
 
 app = Flask(__name__)
 CORS(app)
@@ -75,6 +75,28 @@ def sendlab():
 
                 record = labdb.labelget(name)
                 return(jsonify(record))
+
+@app.route('/relsearch', methods=['POST'])
+def relsearch():
+        rid = request.get_json()['id']
+        name = request.get_json()['name']
+        genre = request.get_json()['genre']
+        rtype = request.get_json()['type']
+        date = request.get_json()['year'] if request.get_json()['year'] != '' else "0"
+
+        records = reldb.relsearch(rid, name, genre, rtype, date)
+        return jsonify(records)
+
+@app.route('/rellook', methods=['POST'])
+def relload():
+        id = request.get_json()['id']
+        name = request.get_json()['name']
+        rel = request.get_json()['release']
+        
+        records = reldb.relload(id, name, rel)
+        records.append(songdb.listsong(id, rel))
+        print(records)
+        return jsonify(records)
 
 @app.route('/usergone', methods=['POST'])
 def deluser():
