@@ -35,3 +35,17 @@ def labelget(n):
     cursor.close()
     connection.close()
     return record
+
+
+def putsout(l):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("""select releasename, p.id, name from label as l, putsout as p, artist as a where
+                    l.labelname = '{0}' and p.labelname = '{0}' and
+                    p.id = a.id;"""
+                    .format(l))
+    
+    records = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return records

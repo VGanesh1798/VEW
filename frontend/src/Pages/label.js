@@ -1,5 +1,6 @@
 import React from "react";
-import { Segment, Header, Divider, Grid } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { Segment, Header, Divider, Grid, Container } from "semantic-ui-react";
 import axios from "axios";
 
 export default class Label extends React.Component {
@@ -9,7 +10,8 @@ export default class Label extends React.Component {
             name: "Example",
             super: "",
             ceo: "",
-            year: ""
+            year: "",
+            relist: []
         }
     }
 
@@ -22,13 +24,19 @@ export default class Label extends React.Component {
             .then( (response) => {
                 const alist = response.data;
                 const blist = alist[0]
-                console.log(blist);
+                this.setState({relist: alist[1]});
+                console.log(this.state.relist);
                 this.setState({name: blist[0], super: blist[1], ceo: blist[2], year: blist[3]})
             })
         
     }
 
     render() {
+
+        const songlist = this.state.relist.map((value) =>
+        <ol key={value} style={{fontSize:"15px"}}>
+            <Link style={{color: "white"}} to={{pathname: "/release", state: {id: value[1], name: value[2], release: value[0]} }}>{value[0]}</Link>
+        </ol>);
 
         return (
             <Segment inverted>
@@ -39,6 +47,9 @@ export default class Label extends React.Component {
                         <Segment inverted color="blue">
                             <Header as="h5">Releases</Header>
                             <Divider />
+                            <Container textAlign="left">
+                                {songlist}
+                            </Container>
                         </Segment>
                     </Grid.Column>
                     <Grid.Column>

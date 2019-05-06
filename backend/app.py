@@ -74,6 +74,7 @@ def sendlab():
                 name = request.get_json()['id']
 
                 record = labdb.labelget(name)
+                record.append(labdb.putsout(name))
                 return(jsonify(record))
 
 @app.route('/relsearch', methods=['POST'])
