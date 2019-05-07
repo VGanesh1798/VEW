@@ -2,10 +2,11 @@ from flask import Flask, jsonify, request
 import psycopg2
 from json import *
 from flask_cors import CORS, cross_origin
-import labdb, userdb, artdb, reldb, songdb
+import labdb, userdb, artdb, reldb, songdb, ratedb
 
 app = Flask(__name__)
 CORS(app)
+xyzname = "Guest"
 
 app.config['DEBUG'] = True
 
@@ -22,10 +23,23 @@ def login():
         for row in records:
             print('User is: ' + row[0] + '\nPassword is: ' + row[1])
             if username in row and password in row:
-                print('I Worked and I\'m waiting')
-                return 'Success'   
+                        global xyzname
+                        xyzname = username
+                        print('I Worked and I\'m waiting')
+                        return jsonify(xyzname)   
     else:
-        return 'F'
+        return jsonify(xyzname)
+
+@app.route('/logout', methods=['POST'])
+def logout():
+        global xyzname
+        xyzname = "Guest"
+        return "Logged out"
+
+@app.route('/rate', methods=['GET', 'POST'])
+def rate():
+        if request.method == 'GET':
+                return jsonify(xyzname)
 
 @app.route('/create', methods=['POST', 'GET'])
 def create():
@@ -46,6 +60,13 @@ def artsearch():
 
                 records = dict(artdb.artistsearch(name, date, town, style, instrument))        
                 return jsonify(records)
+
+@app.route('/artbyid', methods=['POST'])
+def artbyid():
+        id = request.get_json()['id']
+        record = artdb.artbyid(id)
+
+        return jsonify(record)
 
 @app.route('/label', methods=['POST', 'GET'])
 def labsearch():
@@ -98,6 +119,34 @@ def relload():
         records.append(songdb.listsong(id, rel))
         print(records)
         return jsonify(records)
+
+@app.route('/getrate', methods=['POST'])
+def getrate():
+        id = request.get_json()['id']
+        name = request.get_json()['name']
+        print(id, name)
+        records = ratedb.getrate(id, name)
+        print(records)
+        return jsonify(records)
+
+@app.route('/checkrate', methods=['POST'])
+def checkrate():
+        user = request.get_json()['user']
+        id = request.get_json()['id']
+        name = request.get_json()['name']
+        print(user, id, name)
+        records = ratedb.checkrate(user, id, name)
+        return jsonify(records)
+
+@app.route('/addrate', methods=['POST'])
+def addrate():
+        user = request.get_json()['user']
+        id = request.get_json()['id']
+        name = request.get_json()['name']
+        rate = float(request.get_json()['rate'])
+        print(user, id, name, rate)
+        ratedb.addrate(user, id, name, rate)
+        return "Success"
 
 @app.route('/usergone', methods=['POST'])
 def deluser():

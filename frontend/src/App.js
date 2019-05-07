@@ -4,6 +4,7 @@ import { Route, BrowserRouter } from 'react-router-dom';
 import Root from './Pages/root';
 import Login from './Pages/login';
 import Home from './Pages/home';
+import Rate from './Pages/rate';
 import Artist from './Pages/artist';
 import Label from './Pages/label';
 import Release from './Pages/release';
@@ -23,6 +24,7 @@ export default class App extends Component {
           <Route exact path={"/"} render={props => <Login {...props} />} />
           <Route path="/create" render={props => <Create {...props} />} />
           <Route path="/home" render={props => <Home {...props} />} />
+          <Route path="/rate" render={props => <Rate {...props} />} />
           <Route path="/artist" render={props => <Artist {...props} />} />
           <Route path="/label" render={props => <Label {...props} />} />
           <Route path="/release" render={props => <Release {...props} />} />

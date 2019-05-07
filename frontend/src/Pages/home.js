@@ -1,12 +1,21 @@
 import React from 'react';
 import { Header, Segment, Divider } from "semantic-ui-react";
+import axios from "axios";
 
 export default class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: "Guest"
+            username: ""
         }
+    }
+
+    componentDidMount() {
+        axios.get("http://localhost:5000/login")
+            .then((response) => {
+                console.log(response.data);
+                this.setState({username: response.data})
+            })
     }
 
     render() {

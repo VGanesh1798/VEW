@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Segment, Header, Divider, Grid, Container, Button } from "semantic-ui-react";
 import axios from "axios";
 
@@ -40,10 +41,14 @@ export default class Release extends React.Component {
 
                 });
             });
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault();
+        axios.post("http://localhost:5000/getrate", {
+                id: this.props.location.state.id,
+                name: this.props.location.state.release
+            })
+            .then((response) => {
+                const newlist = response.data;
+                this.setState({rating: newlist[0][0]});
+            })
     }
 
     render() {
@@ -77,10 +82,12 @@ export default class Release extends React.Component {
                     </Grid.Column>
                     <Grid.Column textAlign="center">
                         <Segment inverted color="pink" textAlign="center">
-                            <Header as="h6">RATING: {this.state.rating}</Header>
+                            <Header as="h4">RATING: {this.state.rating}</Header>
                         </Segment>
                         <Segment inverted textAlign="center">
-                            <Button color="green">Rate this Release!</Button>
+                            <Button color="green" as={Link} to={{pathname: "/rate", state: {id: this.state.id, name: this.state.name} }}>
+                                Rate this Release!
+                            </Button>
                         </Segment>
                         <Segment inverted color="teal" textAlign="left">
                             <ul style={{listStyle:"none"}}>

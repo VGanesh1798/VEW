@@ -12,6 +12,12 @@ export default class Login extends React.Component {
     }
     
     componentDidMount() {
+        axios.post("http://localhost:5000/logout", {
+                username: this.state.username
+            })
+            .then((response) => {
+                console.log(response.data);
+            })
         axios.get("http://localhost:5000/")
             .then(function (response) {
                 console.log(response.data);
@@ -31,8 +37,7 @@ export default class Login extends React.Component {
                 password: this.state.password
             })
             .then( (response) => {
-                console.log(response.data);
-                if(response.data === 'Success') {
+                if(response.data) {
                     this.props.history.push('/home');
                 }
             })

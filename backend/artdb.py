@@ -9,6 +9,17 @@ def driver():
     return connection
 
 
+def artbyid(i):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("select name from artist where id = {0};".format(i))
+
+    record = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return record
+
+
 def artistsearch(n, y, h, s, i):
     connection = driver()
     cursor = connection.cursor()
