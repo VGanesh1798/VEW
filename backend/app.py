@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 import psycopg2
 from json import *
 from flask_cors import CORS, cross_origin
-import labdb, userdb, artdb, reldb, songdb, ratedb
+import labdb, userdb, artdb, reldb, songdb, ratedb, playdb
 
 app = Flask(__name__)
 CORS(app)
@@ -185,6 +185,24 @@ def artrate():
         id = request.get_json()['id']
         record = ratedb.artrate(id)
         return jsonify(record)
+
+@app.route('/playlist', methods=['POST'])
+def playsearch():
+        user = request.get_json()['user']
+        title = request.get_json()['title']
+        tag = request.get_json()['tag']
+        records = playdb.playsearch(user, title, tag)
+        return jsonify(records)
+
+@app.route('/playget', methods=['POST'])
+def playget():
+        user = request.get_json()['user']
+        title = request.get_json()['title']
+        print(user, title, "HO")
+        records = playdb.playget(user, title)
+        records.append(playdb.playsongs(user, title))
+        return jsonify(records)
+
 
 @app.route('/usergone', methods=['POST'])
 def deluser():

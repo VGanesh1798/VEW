@@ -44,7 +44,6 @@ export default class Song extends React.Component {
             })
             .then((response) => {
                 this.setState({flist: response.data})
-                console.log(this.state.flist, "HI");
             })
     }
 
@@ -83,7 +82,9 @@ export default class Song extends React.Component {
                         </Segment>
                     </Grid.Column>
                     <Grid.Column textAlign="center">
-                        <Button color="green">Add to Playlist!</Button>
+                        <Button color="green"
+                            as={Link} to={{pathname:"/add", state: {id: this.state.id, rel: this.state.rel, song: this.state.song} }}>
+                            Add to Playlist!</Button>
                         <Segment inverted color="teal" textAlign="left">
                             <ul style={{listStyle:"none"}}>
                                 <li>{this.state.genre}</li>
