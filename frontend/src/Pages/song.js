@@ -83,7 +83,7 @@ export default class Song extends React.Component {
                     </Grid.Column>
                     <Grid.Column textAlign="center">
                         <Button color="green"
-                            as={Link} to={{pathname:"/add", state: {id: this.state.id, rel: this.state.rel, song: this.state.song} }}>
+                            as={Link} to={{pathname:"/add", state: {id: this.state.id, rel: this.state.rel, song: this.state.song, date: this.state.year} }}>
                             Add to Playlist!</Button>
                         <Segment inverted color="teal" textAlign="left">
                             <ul style={{listStyle:"none"}}>

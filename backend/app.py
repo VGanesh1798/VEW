@@ -28,7 +28,10 @@ def login():
                         print('I Worked and I\'m waiting')
                         return jsonify(xyzname)   
     else:
-        return jsonify(xyzname)
+        user = xyzname
+        records = playdb.getlists(user)
+        records.append(user)
+        return jsonify(records)
 
 @app.route('/logout', methods=['POST'])
 def logout():
@@ -40,6 +43,25 @@ def logout():
 def rate():
         if request.method == 'GET':
                 return jsonify(xyzname)
+
+@app.route('/add', methods=['GET', 'POST'])
+def addsong():
+        if request.method == 'GET':
+                user = xyzname
+                records = playdb.getlists(user)
+                records.append(user)
+                return jsonify(records)
+        else:
+                user = request.get_json()['user']
+                title = request.get_json()['title']
+                song = request.get_json()['song']
+                rel = request.get_json()['rel']
+                id =  request.get_json()['id']
+                year = request.get_json()['date']
+                print(user, title, song, rel, id, year)
+                playdb.addsong(user, title, song, rel, id, year) 
+                return "Hi"
+
 
 @app.route('/create', methods=['POST', 'GET'])
 def create():
@@ -224,6 +246,20 @@ def addart():
         artdb.add(aid, name, date, town, style, instrument)
 
         return "Hello"
+
+@app.route('/addplay', methods=['POST'])
+def addplay():
+        user = request.get_json()['user']
+        title = request.get_json()['title']
+        tag = request.get_json()['tag']
+        playdb.addplay(user, title, tag)
+        return "Done"
+
+@app.route('/delplay', methods=['POST'])
+def delplay():
+        title = request.get_json()['title']
+        playdb.delplay(title)
+        return "Done"
 
 if __name__ == "__main__":
         app.run()

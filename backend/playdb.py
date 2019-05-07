@@ -43,3 +43,45 @@ def playsongs(u, p):
     cursor.close()
     connection.close()
     return records
+
+def getlists(u):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("""select pltitle from playlist where
+                    userid = '{0}';""".format(u))
+    records = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return records
+
+def addsong(u, t, s, r, i, y):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("""insert into includes values('{0}',
+                    '{1}', '{2}', '{3}', {4}, {5})"""
+                    .format(t, u, s, r, i, y))
+    cursor.close()
+    connection.commit()
+    connection.close()
+    return
+
+def addplay(u, p, t):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("""insert into playlist values('{0}',
+                    '{1}', '{2}', 0);""".format(u, p, t))
+    cursor.close()
+    connection.commit()
+    connection.close()
+    return
+
+def delplay(p):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("""delete from playlist 
+                    where pltitle = '{0}';"""
+                    .format(p))
+    cursor.close()
+    connection.commit()
+    connection.close()
+    return
