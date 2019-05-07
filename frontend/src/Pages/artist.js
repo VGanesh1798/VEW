@@ -35,6 +35,10 @@ export default class Artist extends React.Component {
                                instrument: blist[5], 
                                disbanded: blist[6]});
                 });
+        axios.post("http://localhost:5000/artrate", {id})
+                .then( (response) => {
+                    this.setState({rating: response.data[0][0]});
+                })
     }
 
     render() {
@@ -79,7 +83,7 @@ export default class Artist extends React.Component {
                 <Grid.Column>
                     <Segment inverted textAlign="center">
                         <Segment inverted color="pink">
-                            <Header as="h6">RATING: {this.state.rating}</Header>
+                            <Header as="h4">RATING: {this.state.rating}</Header>
                         </Segment>
                         <Segment inverted color="teal" textAlign="left">
                             <ul style={{listStyle:"none"}}>

@@ -56,7 +56,7 @@ export default class Release extends React.Component {
         const name = this.props.location.state.name;
         const slist = this.state.songlist.map((value) =>
         <ol key={value} style={{fontSize:"15px"}}>
-            {value[2]}
+            <Link style={{color:"white"}} to={{pathname: "/song", state: {id: this.props.location.state.id, art: name, rel: release, song: value[2]} }}>{value[2]}</Link>
         </ol>)
 
         return (

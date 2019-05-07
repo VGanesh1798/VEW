@@ -18,3 +18,45 @@ def listsong(i, r):
     cursor.close()
     connection.close()
     return records
+
+def songsearch(a, r, s, g, y):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("""select a.ID, name, releasename, songname
+                    from song as s, artist as a where
+                    (s.id = a.id) and 
+                    (a.name like '{0}%' or '{0}' = '') and
+                    (s.releasename like '{1}%' or '{1}' = '') and
+                    (s.songname like '{2}%' or '{2}' = '') and
+                    (s.genre like '{3}%' or '{3}' = '') and
+                    (s.releaseyear = {4} or {4} = '0');"""
+                    .format(a, r, s, g, y))
+    records = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return records
+
+def songlook(i, r, s):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("""select * from song where id = {0} and
+                    releasename = '{1}' and songname = '{2}';"""
+                    .format(i, r, s))
+    
+    records = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return records
+
+def feats(i, r, s):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("""select a.id, name from songfeature as f, artist as a
+                    where f.feature = a.id and
+                    f.id = {0} and f.releasename = '{1}' and
+                    f.songname = '{2}';""".format(i, r, s))
+    
+    records = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return records

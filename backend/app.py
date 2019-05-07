@@ -120,6 +120,38 @@ def relload():
         print(records)
         return jsonify(records)
 
+@app.route('/song', methods=['POST'])
+def songsearch():
+        art = request.get_json()['id']
+        rel = request.get_json()['rel']
+        song = request.get_json()['song']
+        genre = request.get_json()['genre']
+        year = request.get_json()['year'] if request.get_json()['year'] != '' else "0"
+
+        records = songdb.songsearch(art, rel, song, genre, year)
+        return jsonify(records)
+
+@app.route('/songlook', methods=['POST'])
+def songlook():
+        id = request.get_json()['id']
+        rel = request.get_json()['rel']
+        song = request.get_json()['song']
+
+        records = songdb.songlook(id, rel, song)
+        print(id, rel, song, records)
+        return jsonify(records)
+
+@app.route('/feats', methods=['POST'])
+def feats():
+        id = request.get_json()['id']
+        rel = request.get_json()['rel']
+        song = request.get_json()['song']
+
+        print(id, rel, song, "Hi")
+
+        records = songdb.feats(id, rel, song)
+        return jsonify(records)
+
 @app.route('/getrate', methods=['POST'])
 def getrate():
         id = request.get_json()['id']
@@ -147,6 +179,12 @@ def addrate():
         print(user, id, name, rate)
         ratedb.addrate(user, id, name, rate)
         return "Success"
+
+@app.route('/artrate', methods=['POST'])
+def artrate():
+        id = request.get_json()['id']
+        record = ratedb.artrate(id)
+        return jsonify(record)
 
 @app.route('/usergone', methods=['POST'])
 def deluser():

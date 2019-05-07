@@ -40,3 +40,12 @@ def addrate(u, i, n, r):
     connection.commit()
     connection.close()
     return
+
+def artrate(i):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("select avg(rating) from rates where id={0};".format(i))
+    record = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return record
