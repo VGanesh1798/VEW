@@ -59,6 +59,16 @@ def award(i):
     connection.close()
     return record 
 
+def addaward(i, n, y):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("""insert into artistawards values({0}, '{1}', {2});"""
+                    .format(i, n, y))
+    cursor.close()
+    connection.commit()
+    connection.close()
+    return
+
 
 def maxid():
     connection = driver()
@@ -75,6 +85,17 @@ def add(d, n, y, h, s, i):
     cursor = connection.cursor()
     cursor.execute("insert into artist values({0}, '{1}', {2}, '{3}', '{4}', '{5}');".format(d, n, y, h, s, i))
 
+    cursor.close()
+    connection.commit()
+    connection.close()
+    return "Success"
+
+def rem(i, n):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("""delete from artist where id = {0} or 
+                    name = '{1}';""".format(i, n))
+    
     cursor.close()
     connection.commit()
     connection.close()

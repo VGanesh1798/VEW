@@ -238,7 +238,7 @@ def addart():
         aid = artdb.maxid() + 1
         print(aid)
         name = request.get_json()['name']
-        date = request.get_json()['year']
+        date = request.get_json()['year'] if request.get_json()['year'] != '' else 'null'
         town = request.get_json()['town'] 
         style = request.get_json()['style']
         instrument = request.get_json()['instrument']
@@ -247,12 +247,96 @@ def addart():
 
         return "Hello"
 
+@app.route('/remart', methods=['POST'])
+def remart():
+        id = request.get_json()['id'] if request.get_json()['id'] != '' else 'null'
+        name = request.get_json()['name']
+        artdb.rem(id, name)
+        return "Success"
+
+@app.route('/userchange', methods=['POST'])
+def changename():
+        old = request.get_json()['old']
+        new = request.get_json()['new']
+        userdb.changename(old, new)
+        return "Done"
+
 @app.route('/addplay', methods=['POST'])
 def addplay():
         user = request.get_json()['user']
         title = request.get_json()['title']
         tag = request.get_json()['tag']
         playdb.addplay(user, title, tag)
+        return "Done"
+
+@app.route('/addaward', methods=['POST'])
+def addaward():
+        id = request.get_json()['id']
+        name = request.get_json()['award']
+        year = request.get_json()['ayear']
+        artdb.addaward(id, name, year)
+        return "Added"
+
+@app.route('/addlab', methods=['POST'])
+def addlab():
+        name = request.get_json()['name']
+        sup = request.get_json()['super']
+        ceo = request.get_json()['ceo']
+        year = request.get_json()['year'] if request.get_json()['year'] != '' else 'null'
+        labdb.addlab(name, sup, ceo, year)
+        return "Done"
+
+@app.route('/addrel', methods=['POST'])
+def addrel():
+        id = request.get_json()['id']
+        rel = request.get_json()['rel']
+        genre = request.get_json()['genre']
+        gtype =  request.get_json()['type']
+        year =  request.get_json()['year'] if request.get_json()['year'] != '' else 'null'
+        label =  request.get_json()['label']
+        reldb.addrel(id, rel, genre, gtype, year, label)
+        return "Finished"
+
+@app.route('/addsong', methods=['POST'])
+def sadd():
+        id = request.get_json()['id']
+        rel = request.get_json()['rel']
+        song = request.get_json()['song']
+        genre = request.get_json()['genre']
+        length = request.get_json()['length']
+        year = request.get_json()['year'] if request.get_json()['year'] != '' else 'null'
+        songdb.addsong(id, rel, song, genre, length, year)
+        return "Added"
+
+@app.route('/addfeat', methods=['POST'])
+def addfeat():
+        id = request.get_json()['aid']
+        rel = request.get_json()['rel']
+        song = request.get_json()['song']
+        feat = request.get_json()['fid']
+        year = request.get_json()['year']
+        songdb.addfeat(id, rel, song, feat, year)
+        return "Featured"
+
+@app.route('/delsong', methods=['POST'])
+def delsong():
+        id = request.get_json()['id']
+        rel = request.get_json()['rel']
+        song = request.get_json()['song']
+        songdb.delsong(id, rel, song)
+        return "Removed"
+
+@app.route('/delrel', methods=['POST'])
+def delrel():
+        id = request.get_json()['id']
+        rel = request.get_json()['rel']
+        reldb.delrel(id, rel)
+        return "Finished"
+
+@app.route('/dellab', methods=['POST'])
+def dellab():
+        name = request.get_json()['name']
+        labdb.dellab(name)
         return "Done"
 
 @app.route('/delplay', methods=['POST'])

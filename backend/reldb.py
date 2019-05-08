@@ -46,3 +46,29 @@ def relload(i, n, r):
     cursor.close()
     connection.close()
     return records
+
+def addrel(i, r, g, t, y, l):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("""insert into releases values 
+                    ({0}, '{1}', '{2}', '{3}', null, {4});"""
+                    .format(i, r, g, t, y))
+    cursor.execute("""insert into putsout values
+                    ('{0}', '{1}', {2});"""
+                    .format(l, r, i))
+    
+    cursor.close()
+    connection.commit()
+    connection.close()
+    return
+
+def delrel(i, r):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("""delete from releases where 
+                    id = {0} and releasename = '{1}';"""
+                    .format(i, r))
+    cursor.close()
+    connection.commit()
+    connection.close()
+    return

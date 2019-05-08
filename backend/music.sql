@@ -4,7 +4,6 @@ CREATE TABLE Label
 	Super			varchar(50),
 	CEO				varchar(50),
 	FoundingDate	int,
-	
 	PRIMARY KEY (LabelName)
 );
 
@@ -40,9 +39,9 @@ CREATE TABLE PutsOut
 	ID				int,
 	
 	PRIMARY KEY (LabelName, ReleaseName, ID),
-	FOREIGN KEY (LabelName) REFERENCES Label(LabelName),
-	FOREIGN KEY (ReleaseName) REFERENCES Releases(ReleaseName),
-	FOREIGN KEY (ID) REFERENCES Artist(ID)
+	FOREIGN KEY (LabelName) REFERENCES Label(LabelName) ON DELETE CASCADE,
+	FOREIGN KEY (ReleaseName) REFERENCES Releases(ReleaseName) ON DELETE CASCADE,
+	FOREIGN KEY (ID) REFERENCES Artist(ID) ON DELETE CASCADE
 );
 
 CREATE TABLE ArtistAwards
@@ -52,13 +51,13 @@ CREATE TABLE ArtistAwards
 	YearWon		int,
 	
 	PRIMARY KEY (ID, AwardName, YearWon),
-	FOREIGN KEY (ID) REFERENCES Artist(ID)
+	FOREIGN KEY (ID) REFERENCES Artist(ID) ON DELETE CASCADE
 );
 
 CREATE TABLE Song
 (
-	ID				int REFERENCES Artist(ID),
-	ReleaseName		varchar(50) REFERENCES Releases(ReleaseName),
+	ID				int REFERENCES Artist(ID) ON DELETE CASCADE,
+	ReleaseName		varchar(50) REFERENCES Releases(ReleaseName) ON DELETE CASCADE,
 	SongName		varchar(50),
 	Genre			varchar(50) NOT NULL,
 	SLength			float NOT NULL,
@@ -70,14 +69,14 @@ CREATE TABLE Song
 
 CREATE TABLE SongFeature
 (
-	ID				int REFERENCES Artist(ID),
-	ReleaseName		varchar(50) REFERENCES Releases(ReleaseName),
+	ID				int REFERENCES Artist(ID) ON DELETE CASCADE,
+	ReleaseName		varchar(50) REFERENCES Releases(ReleaseName) ON DELETE CASCADE,
 	SongName		varchar(50),
-	Feature			int REFERENCES Artist(ID),
+	Feature			int REFERENCES Artist(ID) ON DELETE CASCADE,
 	ReleaseYear		int,
 	
 	PRIMARY KEY (ID, ReleaseName, SongName, Feature, ReleaseYear),
-	FOREIGN KEY (SongName, ReleaseYear) REFERENCES Song(SongName, ReleaseYear)
+	FOREIGN KEY (SongName, ReleaseYear) REFERENCES Song(SongName, ReleaseYear) ON DELETE CASCADE
 );
 
 CREATE TABLE Users
@@ -90,7 +89,7 @@ CREATE TABLE Users
 
 CREATE TABLE Playlist
 (
-	UserID		varchar(50)  REFERENCES Users(UserID),
+	UserID		varchar(50)  REFERENCES Users(UserID) ON DELETE CASCADE ON UPDATE CASCADE,
 	PLTitle		varchar(50),
 	Tag			varchar(50),
 	PlLength	float NOT NULL,
@@ -106,9 +105,9 @@ CREATE TABLE Rates
 	Rating		float,
 	
 	PRIMARY KEY (UserID, ReleaseName, ID),
-	FOREIGN KEY (UserID) REFERENCES Users(UserID),
-	FOREIGN KEY (ReleaseName) REFERENCES Releases(ReleaseName),
-	FOREIGN KEY (ID) REFERENCES Artist(ID)
+	FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (ReleaseName) REFERENCES Releases(ReleaseName) ON DELETE CASCADE,
+	FOREIGN KEY (ID) REFERENCES Artist(ID) ON DELETE CASCADE
 );
 
 CREATE TABLE Includes
@@ -121,11 +120,11 @@ CREATE TABLE Includes
 	ReleaseYear int,
 	
 	PRIMARY KEY (PLTitle, UserID, SongName, ID, ReleaseYear),
-	FOREIGN KEY (PLTitle) REFERENCES Playlist(PLTitle),
-	FOREIGN KEY (UserID) REFERENCES Users(UserID),
-	FOREIGN KEY (SongName, ReleaseYear) REFERENCES Song(SongName, ReleaseYear),
-	FOREIGN KEY (ReleaseName) REFERENCES Releases(ReleaseName),
-	FOREIGN KEY (ID) REFERENCES Artist(ID)
+	FOREIGN KEY (PLTitle) REFERENCES Playlist(PLTitle) ON DELETE CASCADE,
+	FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (SongName, ReleaseYear) REFERENCES Song(SongName, ReleaseYear) ON DELETE CASCADE,
+	FOREIGN KEY (ReleaseName) REFERENCES Releases(ReleaseName) ON DELETE CASCADE,
+	FOREIGN KEY (ID) REFERENCES Artist(ID) ON DELETE CASCADE
 );
 
 INSERT INTO artist VALUES (000001, 'Kanye West', 1977, 'Chicago, IL', 'Hip Hop', NULL, NULL);
@@ -615,3 +614,230 @@ INSERT INTO Includes VALUES('1', 'Eli', '90210', 'Rodeo', 000003, 2015);
 INSERT INTO Includes VALUES('1', 'Eli', 'Nights', 'Blonde', 000008, 2016);
 INSERT INTO Includes VALUES('1', 'Eli', 'Pyramids', 'Channel Orange', 000008, 2012);
 INSERT INTO Includes VALUES('1', 'Eli', 'Ghost Town', 'Ye', 000001, 2018);
+
+INSERT INTO artist VALUES (100014, 'Carrie Underwood', 1983, 'Muskogee, OK', 'Country', 'Guitar, Piano', false);
+INSERT INTO artist VALUES (100015, 'Toby Keith', 1961, 'Clinton, OK', 'Country', 'Guitar', false);
+
+INSERT INTO artist VALUES (100010, 'Avenged Sevenfold', 1999, 'Huntington Beach, CA', 'Rock', 'Guitar, Bass, Drums', false);
+INSERT INTO artist VALUES (100011, 'Rise Against', 1999, 'Chicago, IL', 'Rock', 'Guitar, Bass, Drums', false); 
+INSERT INTO artist VALUES (100012, 'System of a Down', 1994, 'Glendale, CA', 'Rock', 'Guitar, Bass, Drums', false);
+INSERT INTO artist VALUES (100013, 'Zac Brown Band', 2002, 'Atlanta, GA', 'Country', ' Guitar, Drums', false);
+
+
+INSERT INTO Releases VALUES (100010, 'City of Evil', 'Rock', 'Album', NULL, 2005);
+INSERT INTO Releases VALUES (100010, 'Avenged Sevenfold', 'Rock', 'Album', NULL, 2007);
+
+INSERT INTO Releases VALUES (100011, 'The Sufferer & The Witness', 'Rock', 'Album', NULL, 2006);
+INSERT INTO Releases VALUES (100011, 'Appeal to Reason', 'Rock', 'Album', NULL, 2008);
+
+INSERT INTO Releases VALUES (100012, 'Toxicity', 'Rock', 'Album', NULL, 2001);
+INSERT INTO Releases VALUES (100012, 'Steal This Album!', 'Rock', 'Album', NULL, 2002);
+
+INSERT INTO Releases VALUES (100013, 'The Foundation', 'Country', 'Album', NULL, 2008);
+INSERT INTO Releases VALUES (100013, 'You Get What You Give', 'Country', 'Album', NULL, 2010);
+
+INSERT INTO Releases VALUES (100014, 'Some Hearts', 'Country', 'Album', NULL, 2005);
+INSERT INTO Releases VALUES (100014, 'Carnival Ride', 'Country', 'Album', NULL, 2007);
+
+INSERT INTO Releases VALUES (100015, 'Toby Keith', 'Country', 'Album', NULL, 1993);
+INSERT INTO Releases VALUES (100015, 'Boomtown', 'Country', 'Album', NULL, 1994);
+
+
+INSERT INTO Label VALUES ('Warner Bros. Records', 'Warner Music Group', 'Aaron Bay-Schuck', 1958);
+INSERT INTO Label VALUES ('Geffen', 'Universal Music Group', 'Neil Jacobson', 1980);
+INSERT INTO Label VALUES ('American Recordings', 'Universal Music Group', 'Rick Rubin', 1988);
+INSERT INTO Label VALUES ('Atlantic Records', 'Warner Music Group', 'Craig Kallman', 1947);
+INSERT INTO Label VALUES ('Arista Nashville', 'Sony Music Entertainment', 'David Massey', 1989);
+INSERT INTO Label VALUES ('Mercury Records', 'Universal Music Group', 'David Massey', 1945);
+INSERT INTO Label VALUES ('Polydor Records', 'Universal Music Group', 'Tom March', 1913);
+
+
+INSERT INTO PutsOut VALUES ('Warner Bros. Records', 'City of Evil', 100010);
+INSERT INTO PutsOut VALUES ('Warner Bros. Records', 'Avenged Sevenfold', 100010);
+INSERT INTO PutsOut VALUES ('Geffen', 'The Sufferer & The Witness', 100011);
+INSERT INTO PutsOut VALUES ('Geffen', 'Appeal to Reason', 100011);
+INSERT INTO PutsOut VALUES ('American Recordings', 'Toxicity', 100012);
+INSERT INTO PutsOut VALUES ('American Recordings', 'Steal This Album!', 100012);
+INSERT INTO PutsOut VALUES ('Atlantic Records', 'The Foundation', 100013);
+INSERT INTO PutsOut VALUES ('Atlantic Records', 'You Get What You Give', 100013);
+INSERT INTO PutsOut VALUES ('Arista Nashville', 'Some Hearts', 100014);
+INSERT INTO PutsOut VALUES ('Arista Nashville', 'Carnival Ride', 100014);
+INSERT INTO PutsOut VALUES ('Mercury Records', 'Toby Keith', 100015);
+INSERT INTO PutsOut VALUES ('Polydor Records', 'Boomtown', 100015);
+
+
+INSERT INTO ArtistAwards VALUES (100012, 'Grammy''s: Best Hard Rock Performance', 2006);
+INSERT INTO ArtistAwards VALUES (100013, 'Grammy''s: Best County Album', 2013);
+INSERT INTO ArtistAwards VALUES (100013, 'Grammy''s: Best Country Collaboration', 2011);
+INSERT INTO ArtistAwards VALUES (100013, 'Grammy''s: Best New Artist', 2010);
+INSERT INTO ArtistAwards VALUES (100014, 'Grammy''s: Best Country Solo Performance', 2015);
+INSERT INTO ArtistAwards VALUES (100014, 'Grammy''s: Best Country Solo Performance', 2013);
+INSERT INTO ArtistAwards VALUES (100014, 'Grammy''s: Best Country Collaboration', 2010);
+INSERT INTO ArtistAwards VALUES (100014, 'Grammy''s: Best Female Country Vocal Performance', 2009);
+INSERT INTO ArtistAwards VALUES (100014, 'Grammy''s: Best Female Country Vocal Performance', 2008);
+INSERT INTO ArtistAwards VALUES (100014, 'Grammy''s: Best New Artist', 2007);
+INSERT INTO ArtistAwards VALUES (100014, 'Grammy''s: Best Female Country Vocal Performance', 2007);
+
+
+INSERT INTO Song VALUES (100010, 'City of Evil', 'Beast and the Harlot', 'Rock', 5.42, NULL, 2006);
+INSERT INTO Song VALUES (100010, 'City of Evil', 'Burn It Down', 'Rock', 5.00, NULL, 2006);
+INSERT INTO Song VALUES (100010, 'City of Evil', 'Blinded in Chains', 'Rock', 6.34, NULL, 2006);
+INSERT INTO Song VALUES (100010, 'City of Evil', 'Bat Country', 'Rock', 5.13, NULL, 2006);
+INSERT INTO Song VALUES (100010, 'City of Evil', 'Trashed and Scattered', 'Rock', 5.53, NULL, 2006);
+INSERT INTO Song VALUES (100010, 'City of Evil', 'Seize the Day', 'Rock', 5.32, NULL, 2006);
+INSERT INTO Song VALUES (100010, 'City of Evil', 'Sidewinder', 'Rock', 7.01, NULL, 2006);
+INSERT INTO Song VALUES (100010, 'City of Evil', 'The Wicked End', 'Rock', 7.10, NULL, 2006);
+INSERT INTO Song VALUES (100010, 'City of Evil', 'Strength of the World', 'Rock', 9.14, NULL, 2006);
+INSERT INTO Song VALUES (100010, 'City of Evil', 'Betrayed', 'Rock', 6.47, NULL, 2006);
+INSERT INTO Song VALUES (100010, 'City of Evil', 'M.I.A.', 'Rock', 8.48, NULL, 2006);
+
+INSERT INTO Song VALUES (100010, 'Avenged Sevenfold', 'Critical Acclaim', 'Rock', 5.18, NULL, 2007);
+INSERT INTO Song VALUES (100010, 'Avenged Sevenfold', 'Almost Easy', 'Rock', 4.01, NULL, 2007);
+INSERT INTO Song VALUES (100010, 'Avenged Sevenfold', 'Scream', 'Rock', 4.50, NULL, 2007);
+INSERT INTO Song VALUES (100010, 'Avenged Sevenfold', 'Afterlife', 'Rock', 6.01, NULL, 2007);
+INSERT INTO Song VALUES (100010, 'Avenged Sevenfold', 'Gunslinger', 'Rock', 4.11, NULL, 2007);
+INSERT INTO Song VALUES (100010, 'Avenged Sevenfold', 'Unbound (The Wild Ride)', 'Rock', 5.11, NULL, 2007);
+INSERT INTO Song VALUES (100010, 'Avenged Sevenfold', 'Brompton Cocktail', 'Rock', 4.13, NULL, 2007);
+INSERT INTO Song VALUES (100010, 'Avenged Sevenfold', 'Lost', 'Rock', 5.02, NULL, 2007);
+INSERT INTO Song VALUES (100010, 'Avenged Sevenfold', 'A Little Piece of Heaven', 'Rock', 8.04, NULL, 2007);
+INSERT INTO Song VALUES (100010, 'Avenged Sevenfold', 'Dear God', 'Rock', 6.33, NULL, 2007);
+
+INSERT INTO Song VALUES (100011, 'The Sufferer & The Witness', 'Chamber the Cartridge', 'Rock', 3.35, NULL, 2006);
+INSERT INTO Song VALUES (100011, 'The Sufferer & The Witness', 'Injection', 'Rock', 3.19, NULL, 2006);
+INSERT INTO Song VALUES (100011, 'The Sufferer & The Witness', 'Ready to Fall', 'Rock', 3.47, NULL, 2006);
+INSERT INTO Song VALUES (100011, 'The Sufferer & The Witness', 'Bricks', 'Rock', 1.30, NULL, 2006);
+INSERT INTO Song VALUES (100011, 'The Sufferer & The Witness', 'Under the Knife', 'Rock', 2.45, NULL, 2006);
+INSERT INTO Song VALUES (100011, 'The Sufferer & The Witness', 'Prayer of the Refugee', 'Rock', 3.21, NULL, 2006);
+INSERT INTO Song VALUES (100011, 'The Sufferer & The Witness', 'Drones', 'Rock', 3.01, NULL, 2006);
+INSERT INTO Song VALUES (100011, 'The Sufferer & The Witness', 'The Approaching Curve', 'Rock', 3.44, NULL, 2006);
+INSERT INTO Song VALUES (100011, 'The Sufferer & The Witness', 'Worth Dying For', 'Rock', 3.20, NULL, 2006);
+INSERT INTO Song VALUES (100011, 'The Sufferer & The Witness', 'Behind Closed Doors', 'Rock', 3.15, NULL, 2006);
+INSERT INTO Song VALUES (100011, 'The Sufferer & The Witness', 'Roadside', 'Rock', 3.21, NULL, 2006);
+INSERT INTO Song VALUES (100011, 'The Sufferer & The Witness', 'The Good Left Undone', 'Rock', 4.10, NULL, 2006);
+INSERT INTO Song VALUES (100011, 'The Sufferer & The Witness', 'Survive', 'Rock', 3.40, NULL, 2006);
+
+INSERT INTO Song VALUES (100011, 'Appeal to Reason', 'Collapse (Post-Amerika)', 'Rock', 3.19, NULL, 2008);
+INSERT INTO Song VALUES (100011, 'Appeal to Reason', 'Long Forgotten Sons', 'Rock', 4.01, NULL, 2008);
+INSERT INTO Song VALUES (100011, 'Appeal to Reason', 'Re-Education (Through Labor)', 'Rock', 3.42, NULL, 2008);
+INSERT INTO Song VALUES (100011, 'Appeal to Reason', 'The Dirt Whispered', 'Rock', 3.09, NULL, 2008);
+INSERT INTO Song VALUES (100011, 'Appeal to Reason', 'Kotov Syndrome', 'Rock', 3.05, NULL, 2008);
+INSERT INTO Song VALUES (100011, 'Appeal to Reason', 'From Heads Unworthy', 'Rock', 3.42, NULL, 2008);
+INSERT INTO Song VALUES (100011, 'Appeal to Reason', 'The Strength to Go On', 'Rock', 3.27, NULL, 2008);
+INSERT INTO Song VALUES (100011, 'Appeal to Reason', 'Audience of One', 'Rock', 4.05, NULL, 2008);
+INSERT INTO Song VALUES (100011, 'Appeal to Reason', 'Entertainment', 'Rock', 3.34, NULL, 2008);
+INSERT INTO Song VALUES (100011, 'Appeal to Reason', 'Hero of War', 'Rock', 4.13, NULL, 2008);
+INSERT INTO Song VALUES (100011, 'Appeal to Reason', 'Savior', 'Rock', 4.02, NULL, 2008);
+INSERT INTO Song VALUES (100011, 'Appeal to Reason', 'Hairline Fracture', 'Rock', 4.02, NULL, 2008);
+INSERT INTO Song VALUES (100011, 'Appeal to Reason', 'Whereabouts Unknown', 'Rock', 4.02, NULL, 2008);
+
+INSERT INTO Song VALUES (100012, 'Toxicity', 'Prison Song', 'Rock', 3.21, NULL, 2001);
+INSERT INTO Song VALUES (100012, 'Toxicity', 'Needles', 'Rock', 3.12, NULL, 2001);
+INSERT INTO Song VALUES (100012, 'Toxicity', 'Deer Dance', 'Rock', 2.55, NULL, 2001);
+INSERT INTO Song VALUES (100012, 'Toxicity', 'Jet Pilot', 'Rock', 2.05, NULL, 2001);
+INSERT INTO Song VALUES (100012, 'Toxicity', 'X', 'Rock', 1.57, NULL, 2001);
+INSERT INTO Song VALUES (100012, 'Toxicity', 'Chop Suey!', 'Rock', 3.30, NULL, 2001);
+INSERT INTO Song VALUES (100012, 'Toxicity', 'Bounce', 'Rock', 1.54, NULL, 2001);
+INSERT INTO Song VALUES (100012, 'Toxicity', 'Forest', 'Rock', 4.02, NULL, 2001);
+INSERT INTO Song VALUES (100012, 'Toxicity', 'ATWA', 'Rock', 2.56, NULL, 2001);
+INSERT INTO Song VALUES (100012, 'Toxicity', 'Science', 'Rock', 2.42, NULL, 2001);
+INSERT INTO Song VALUES (100012, 'Toxicity', 'Shimmy', 'Rock', 1.50, NULL, 2001);
+INSERT INTO Song VALUES (100012, 'Toxicity', 'Toxicity', 'Rock', 3.40, NULL, 2001);
+INSERT INTO Song VALUES (100012, 'Toxicity', 'Psycho', 'Rock', 3.48, NULL, 2001);
+INSERT INTO Song VALUES (100012, 'Toxicity', 'Aerials', 'Rock', 6.11, NULL, 2001);
+
+INSERT INTO Song VALUES (100012, 'Steal This Album!', 'Chic ''N'' Stu', 'Rock', 2.23, NULL, 2002);
+INSERT INTO Song VALUES (100012, 'Steal This Album!', 'Innervision', 'Rock', 2.33, NULL, 2002);
+INSERT INTO Song VALUES (100012, 'Steal This Album!', 'Bubbles', 'Rock', 1.56, NULL, 2002);
+INSERT INTO Song VALUES (100012, 'Steal This Album!', 'Boom!', 'Rock', 2.14, NULL, 2002);
+INSERT INTO Song VALUES (100012, 'Steal This Album!', 'Nuguns', 'Rock', 2.30, NULL, 2002);
+INSERT INTO Song VALUES (100012, 'Steal This Album!', 'A.D.D. (American Dream Denial)', 'Rock', 3.17, NULL, 2002);
+INSERT INTO Song VALUES (100012, 'Steal This Album!', 'Mr. Jack', 'Rock', 4.09, NULL, 2002);
+INSERT INTO Song VALUES (100012, 'Steal This Album!', 'I-E-A-I-A-I-O', 'Rock', 3.08, NULL, 2002);
+INSERT INTO Song VALUES (100012, 'Steal This Album!', '36', 'Rock', 0.46, NULL, 2002);
+INSERT INTO Song VALUES (100012, 'Steal This Album!', 'Pictures', 'Rock', 2.06, NULL, 2002);
+INSERT INTO Song VALUES (100012, 'Steal This Album!', 'Highway Song', 'Rock', 3.13, NULL, 2002);
+INSERT INTO Song VALUES (100012, 'Steal This Album!', 'Fuck the System', 'Rock', 2.12, NULL, 2002);
+INSERT INTO Song VALUES (100012, 'Steal This Album!', 'Ego Brain', 'Rock', 3.21, NULL, 2002);
+INSERT INTO Song VALUES (100012, 'Steal This Album!', 'Thetawaves', 'Rock', 2.36, NULL, 2002);
+INSERT INTO Song VALUES (100012, 'Steal This Album!', 'Roulette', 'Rock', 3.21, NULL, 2002);
+INSERT INTO Song VALUES (100012, 'Steal This Album!', 'Streamline', 'Rock', 3.37, NULL, 2002);
+
+INSERT INTO Song VALUES (100013, 'The Foundation', 'Toes', 'Country', 4.21, NULL, 2008);
+INSERT INTO Song VALUES (100013, 'The Foundation', 'Whatever It Is', 'Country', 3.29, NULL, 2008);
+INSERT INTO Song VALUES (100013, 'The Foundation', 'Where the Boat Leaves From', 'Country', 3.44, NULL, 2008);
+INSERT INTO Song VALUES (100013, 'The Foundation', 'Free', 'Country', 3.48, NULL, 2008);
+INSERT INTO Song VALUES (100013, 'The Foundation', 'Chicken Fried', 'Country', 3.58, NULL, 2008);
+INSERT INTO Song VALUES (100013, 'The Foundation', 'Mary', 'Country', 2.50, NULL, 2008);
+INSERT INTO Song VALUES (100013, 'The Foundation', 'Different Kind of Fine', 'Country', 3.18, NULL, 2008);
+INSERT INTO Song VALUES (100013, 'The Foundation', 'Highway 20 Ride', 'Country', 3.51, NULL, 2008);
+INSERT INTO Song VALUES (100013, 'The Foundation', 'It''s Not OK', 'Country', 4.10, NULL, 2008);
+INSERT INTO Song VALUES (100013, 'The Foundation', 'Jolene', 'Country', 4.21, NULL, 2008);
+INSERT INTO Song VALUES (100013, 'The Foundation', 'Sic ''em on a Chicken', 'Country', 3.51, NULL, 2008);
+
+INSERT INTO Song VALUES (100013, 'You Get What You Give', 'Let It Go', 'Country', 4.37, NULL, 2010);
+INSERT INTO Song VALUES (100013, 'You Get What You Give', 'Knee Deep', 'Country', 3.23, NULL, 2010);
+INSERT INTO Song VALUES (100013, 'You Get What You Give', 'No Hurry', 'Country', 3.46, NULL, 2010);
+INSERT INTO Song VALUES (100013, 'You Get What You Give', 'I Play the Road', 'Country', 4.19, NULL, 2010);
+INSERT INTO Song VALUES (100013, 'You Get What You Give', 'Cold Hearted', 'Country', 3.47, NULL, 2010);
+INSERT INTO Song VALUES (100013, 'You Get What You Give', 'Whiskey''s Gone', 'Country', 2.46, NULL, 2010);
+INSERT INTO Song VALUES (100013, 'You Get What You Give', 'Quiet Your Mind', 'Country', 3.40, NULL, 2010);
+INSERT INTO Song VALUES (100013, 'You Get What You Give', 'Colder Weather', 'Country', 4.33, NULL, 2010);
+INSERT INTO Song VALUES (100013, 'You Get What You Give', 'Settle Me Down', 'Country', 3.21, NULL, 2010);
+INSERT INTO Song VALUES (100013, 'You Get What You Give', 'As She''s Walking Away', 'Country', 3.43, NULL, 2010);
+INSERT INTO Song VALUES (100013, 'You Get What You Give', 'Keep Me in Mind', 'Country', 3.34, NULL, 2010);
+INSERT INTO Song VALUES (100013, 'You Get What You Give', 'Who Knows ', 'Country', 10.02, NULL, 2010);
+INSERT INTO Song VALUES (100013, 'You Get What You Give', 'Martin', 'Country', 5.06, NULL, 2010);
+INSERT INTO Song VALUES (100013, 'You Get What You Give', 'Make This Day', 'Country', 4.02, NULL, 2010);
+
+INSERT INTO Song VALUES (100014, 'Some Hearts', 'Wasted', 'Country', 4.34, NULL, 2005);
+INSERT INTO Song VALUES (100014, 'Some Hearts', 'Don''t Forget to Remember Me', 'Country', 4.00, NULL, 2005);
+INSERT INTO Song VALUES (100014, 'Some Hearts', 'Some Hearts', 'Country', 3.48, NULL, 2005);
+INSERT INTO Song VALUES (100014, 'Some Hearts', 'Jesus, Take the Wheel', 'Country', 3.46, NULL, 2005);
+INSERT INTO Song VALUES (100014, 'Some Hearts', 'The Night Before (Life Goes On)', 'Country', 3.54, NULL, 2005);
+INSERT INTO Song VALUES (100014, 'Some Hearts', 'Lessons Learned', 'Country', 4.09, NULL, 2005);
+INSERT INTO Song VALUES (100014, 'Some Hearts', 'Before He Cheats', 'Country', 3.19, NULL, 2005);
+INSERT INTO Song VALUES (100014, 'Some Hearts', 'Starts With Goodbye', 'Country', 4.06, NULL, 2005);
+INSERT INTO Song VALUES (100014, 'Some Hearts', 'I Just Can''t Live a Lie', 'Country', 3.59, NULL, 2005);
+INSERT INTO Song VALUES (100014, 'Some Hearts', 'We''re Young and Beautiful', 'Country', 3.53, NULL, 2005);
+INSERT INTO Song VALUES (100014, 'Some Hearts', 'That''s Where It Is', 'Country', 3.35, NULL, 2005);
+INSERT INTO Song VALUES (100014, 'Some Hearts', 'Whenever You Remember', 'Country', 3.47, NULL, 2005);
+INSERT INTO Song VALUES (100014, 'Some Hearts', 'I Ain''t in Checotah Anymore', 'Country', 3.21, NULL, 2005);
+
+INSERT INTO Song VALUES (100014, 'Carnival Ride', 'Flat on the Floor', 'Country', 3.18, NULL, 2007);
+INSERT INTO Song VALUES (100014, 'Carnival Ride', 'All-American Girl', 'Country', 3.32, NULL, 2007);
+INSERT INTO Song VALUES (100014, 'Carnival Ride', 'So Small', 'Country', 3.47, NULL, 2007);
+INSERT INTO Song VALUES (100014, 'Carnival Ride', 'Just a Dream', 'Country', 4.44, NULL, 2007);
+INSERT INTO Song VALUES (100014, 'Carnival Ride', 'Get Out of This Town', 'Country', 3.01, NULL, 2007);
+INSERT INTO Song VALUES (100014, 'Carnival Ride', 'Crazy Dreams', 'Country', 3.36, NULL, 2007);
+INSERT INTO Song VALUES (100014, 'Carnival Ride', 'I Know You Won''t', 'Country', 4.19, NULL, 2007);
+INSERT INTO Song VALUES (100014, 'Carnival Ride', 'Last Name', 'Country', 4.01, NULL, 2007);
+INSERT INTO Song VALUES (100014, 'Carnival Ride', 'You Won''t Find This', 'Country', 3.19, NULL, 2007);
+INSERT INTO Song VALUES (100014, 'Carnival Ride', 'I Told You So', 'Country', 4.17, NULL, 2007);
+INSERT INTO Song VALUES (100014, 'Carnival Ride', 'The More Boys I Meet', 'Country', 3.33, NULL, 2007);
+INSERT INTO Song VALUES (100014, 'Carnival Ride', 'Twisted', 'Country', 3.56, NULL, 2007);
+INSERT INTO Song VALUES (100014, 'Carnival Ride', 'Wheel of the World', 'Country', 4.42, NULL, 2007);
+
+INSERT INTO Song VALUES (100015, 'Toby Keith', 'Should''ve Been a Cowboy', 'Country', 3.30, NULL, 1993);
+INSERT INTO Song VALUES (100015, 'Toby Keith', 'He Ain''t Worth Missing', 'Country', 3.05, NULL, 1993);
+INSERT INTO Song VALUES (100015, 'Toby Keith', 'Under the Fall', 'Country', 3.22, NULL, 1993);
+INSERT INTO Song VALUES (100015, 'Toby Keith', 'Some Kinda Good Kinda Hold on Me', 'Country', 3.31, NULL, 1993);
+INSERT INTO Song VALUES (100015, 'Toby Keith', 'Wish I Didn''t Know Now', 'Country', 3.26, NULL, 1993);
+INSERT INTO Song VALUES (100015, 'Toby Keith', 'Ain''t No Thang', 'Country', 3.27, NULL, 1993);
+INSERT INTO Song VALUES (100015, 'Toby Keith', 'Valentine', 'Country', 3.34, NULL, 1993);
+INSERT INTO Song VALUES (100015, 'Toby Keith', 'A Little Less Talk and a Lot More Action', 'Country', 2.49, NULL, 1993);
+INSERT INTO Song VALUES (100015, 'Toby Keith', 'Mama Come Quick', 'Country', 3.23, NULL, 1993);
+INSERT INTO Song VALUES (100015, 'Toby Keith', 'Close but No Guitar', 'Country', 2.46, NULL, 1993);
+INSERT INTO Song VALUES (100015, 'Toby Keith', 'Tossin'' and Turnin''', 'Country', 2.48, NULL, 1993);
+INSERT INTO Song VALUES (100015, 'Toby Keith', 'I''ll Still Call You Baby', 'Country', 3.33, NULL, 1993);
+INSERT INTO Song VALUES (100015, 'Toby Keith', 'Daddy Mac', 'Country', 1.52, NULL, 1993);
+
+INSERT INTO Song VALUES (100015, 'Boomtown', 'Who''s That Man', 'Country', 4.54, NULL, 1994);
+INSERT INTO Song VALUES (100015, 'Boomtown', 'Big Ol'' Truck', 'Country', 3.42, NULL, 1994);
+INSERT INTO Song VALUES (100015, 'Boomtown', 'Victoria''s Secret', 'Country', 3.42, NULL, 1994);
+INSERT INTO Song VALUES (100015, 'Boomtown', 'No Honor Among Thieves', 'Country', 3.11, NULL, 1994);
+INSERT INTO Song VALUES (100015, 'Boomtown', 'Upstairs Downtown', 'Country', 4.26, NULL, 1994);
+INSERT INTO Song VALUES (100015, 'Boomtown', 'You Ain''t Much Fun', 'Country', 2.26, NULL, 1994);
+INSERT INTO Song VALUES (100015, 'Boomtown', 'In Other Words', 'Country', 3.34, NULL, 1994);
+INSERT INTO Song VALUES (100015, 'Boomtown', 'Woman Behind the Man', 'Country', 3.09, NULL, 1994);
+INSERT INTO Song VALUES (100015, 'Boomtown', 'Life Was a Play (The World a Stage)', 'Country', 3.29, NULL, 1994);
+INSERT INTO Song VALUES (100015, 'Boomtown', 'Boomtown', 'Country', 3.44, NULL, 1994);

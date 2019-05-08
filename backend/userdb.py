@@ -41,3 +41,13 @@ def deluser(n):
     connection.commit()
     connection.close()
     return
+
+def changename(o, n):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("""update users set userid='{0}' where
+                    userid = '{1}';""".format(n, o))
+    cursor.close()
+    connection.commit()
+    connection.close()
+    return

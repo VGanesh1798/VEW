@@ -7,12 +7,14 @@ export default class UserOptions extends React.Component {
         super(props);
         this.state = {
             choice: "",
-            username: ""
+            username: "",
+            current: "",
+            new: "",
         }
     }
 
     handleChange = (e) => {
-        this.setState({username: e.target.value});
+        this.setState({[e.target.name]: e.target.value});
     }
 
     removeSubmit = (e) => {
@@ -22,6 +24,19 @@ export default class UserOptions extends React.Component {
                 name: this.state.username
             })
             .then( (response) => {
+                console.log(response.data);
+                this.props.history.push('/home');
+            })
+    }
+
+    changeSubmit = (e) => {
+        e.preventDefault();
+
+        axios.post("http://localhost:5000/userchange", {
+                old: this.state.current,
+                new: this.state.new
+            })
+            .then((response) => {
                 console.log(response.data);
             })
     }
@@ -39,7 +54,16 @@ export default class UserOptions extends React.Component {
             );
         }
         else if(this.state.choice ==="change") {
-            return <h1>Bye</h1>
+            return(
+                <Segment inverted>
+                    <Header as="h3">Change User's Username</Header>
+                    <Form inverted onSubmit={this.changeSubmit}>
+                        <Form.Input label="Current Username" name="current" placeholder="Current" value={this.state.current} onChange={this.handleChange} />
+                        <Form.Input label="New Username" name="new" placeholder="New" value={this.state.new} onChange={this.handleChange} />
+                        <Button type="submit" color="orange">Submit</Button>
+                    </Form>
+                </Segment>
+            );
         }
     }
 

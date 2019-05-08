@@ -49,3 +49,24 @@ def putsout(l):
     cursor.close()
     connection.close()
     return records
+
+def addlab(n, s, c, y):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("""insert into label values('{0}', 
+                    '{1}', '{2}', {3});"""
+                    .format(n, s, c, y))
+    cursor.close()
+    connection.commit()
+    connection.close()
+    return
+
+def dellab(n):
+    connection = driver()
+    cursor = connection.cursor()
+    cursor.execute("""delete from label where labelname = '{0}'""".format(n))
+
+    cursor.close()
+    connection.commit()
+    connection.close()
+    return

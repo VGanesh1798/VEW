@@ -7,11 +7,14 @@ export default class ArtistOptions extends React.Component {
         super(props);
         this.state = {
             choice: "",
+            id: "",
             name: "",
             year: "",
             town: "",
             style: "",
             instrument: "",
+            award: "",
+            ayear: ""
         }
     }
 
@@ -26,8 +29,34 @@ export default class ArtistOptions extends React.Component {
                 instrument: this.state.instrument
             })
             .then( (response) => {
-
+                console.log(response.data);
+                this.props.history.push('/home');
             })
+    }
+
+    removeSubmit = (e) => {
+        e.preventDefault();
+        axios.post("http://localhost:5000/remart", {
+                id: this.state.id,
+                name: this.state.name
+            })
+            .then((response) => {
+                console.log(response.data);
+                this.props.history.push('/home');
+            })
+    }
+
+    awardSubmit = (e) => {
+        e.preventDefault();
+        axios.post("http://localhost:5000/addaward", {
+            id: this.state.id,
+            award: this.state.award,
+            ayear: this.state.ayear
+        })
+        .then((response) => {
+            console.log(response.data);
+            this.props.history.push('/home');
+        })
     }
 
     handleChange = (e) => {
@@ -50,17 +79,15 @@ export default class ArtistOptions extends React.Component {
                 </Segment>
             );
         }
-        else if(this.state.choice === "change") {
-            return (
-                <Segment inverted>
-                    <Header as="h3">Modify Artist</Header>
-                </Segment>
-            );
-        }
         else if(this.state.choice === "remove") {
             return (
                 <Segment inverted>
                     <Header as="h3">Delete Artist</Header>
+                    <Form inverted onSubmit={this.removeSubmit}>
+                        <Form.Input label="Name" name="name" placeholder="Name" value={this.state.name} onChange={this.handleChange} />
+                        <Form.Input label="ID" name="id" placeholder="ID" value={this.state.id} onChange={this.handleChange} />
+                        <Button type="submit" color="red">Delete</Button>
+                    </Form>
                 </Segment>
             );
         }
@@ -68,6 +95,12 @@ export default class ArtistOptions extends React.Component {
             return (
                 <Segment inverted>
                     <Header as="h3">Artist Awards</Header>
+                    <Form inverted onSubmit={this.awardSubmit}>
+                        <Form.Input required label="Artist ID" name="id" type="number" placeholder="ID" value={this.state.id} onChange={this.handleChange} />
+                        <Form.Input required label="Award Name" name="award" placeholder="Award" value={this.state.award} onChange={this.handleChange}/>
+                        <Form.Input required label="Award Year" name="ayear" type="number" placeholder="Year" value={this.state.ayear} onChange={this.handleChange} />
+                        <Button type="submit" color="teal">Add</Button>
+                    </Form>
                 </Segment>
             );
         }
@@ -84,9 +117,8 @@ export default class ArtistOptions extends React.Component {
                 <Divider />
                 <Segment inverted>
                     <Button color="green" onClick={() => this.setState({choice: "add"})}>Add Artist</Button>
-                    <Button color="teal" onClick={() =>this.setState({choice: "change"})}>Modify Artist</Button>
                     <Button color="red" onClick={() => this.setState({choice: "remove"})}>Delete Artist</Button>
-                    <Button color="green" onClick={() => this.setState({choice: "award"})}>Add Award for Artist</Button>
+                    <Button color="teal" onClick={() => this.setState({choice: "award"})}>Add Award for Artist</Button>
                 </Segment>
                 <Divider />
                 <Segment inverted>

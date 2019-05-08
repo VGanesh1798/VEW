@@ -18,6 +18,9 @@ import SongSearch from './Pages/Search/song';
 import PlaylistSearch from './Pages/Search/playlist';
 import UserOptions from './Pages/Options/user';
 import ArtistOptions from './Pages/Options/artist';
+import ReleaseOptions from './Pages/Options/release';
+import SongOptions from './Pages/Options/song';
+import LabelOptions from './Pages/Options/label';
 import PlaylistOptions from './Pages/Options/playlist';
 import Create from './Pages/create';
 
@@ -44,6 +47,9 @@ export default class App extends Component {
           <Route path="/search/playlist" render={props => <PlaylistSearch {...props} />} />
           <Route path="/options/user" render={props => <UserOptions {...props} />} />
           <Route path="/options/artist" render={props => <ArtistOptions {...props} />} />
+          <Route path="/options/release" render={props => <ReleaseOptions {...props} />} />
+          <Route path="/options/song" render={props => <SongOptions {...props} />} />
+          <Route path="/options/label" render={props => <LabelOptions {...props} />} />
           <Route path="/options/playlist" render={props => <PlaylistOptions {...props} />} />
         </Root>
       </BrowserRouter>

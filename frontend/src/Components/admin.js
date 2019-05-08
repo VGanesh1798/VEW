@@ -11,9 +11,9 @@ export default class Admin extends React.Component {
                 <Menu inverted color="blue" vertical>
                     <Menu.Item as={Link} to="/options/user" name="User options" />
                     <Menu.Item as={Link} to="/options/artist" name="Artist options" />
-                    <Menu.Item name="Release options" />
-                    <Menu.Item name="Song options" />
-                    <Menu.Item name="Label options" />
+                    <Menu.Item as={Link} to="/options/release" name="Release options" />
+                    <Menu.Item as={Link} to="/options/song" name="Song options" />
+                    <Menu.Item as={Link} to="/options/label" name="Label options" />
                 </Menu>
             </Segment>
         );
