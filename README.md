@@ -22,7 +22,7 @@ If you want to use the DBMS as yourself, switch to the postgres user and add you
 
 To actually load into a database, run `psql -d DB_NAME` to enter the DBMS shell. In here you can do whatever SQL you want.
 
-If you want to import the SQL file to kickstart the database, use `psql DB_NAME < SQL_FILE.sql`. Likewise if you want to export the database into an sql file, simply run `psql DB_NAME > SQL_FILE.sql`.
+If you want to import the SQL file to kickstart the database, navigate to the backend folder and use `psql DB_NAME < music.sql`. Likewise if you want to export the database into an sql file, simply run `psql DB_NAME > SQL_FILE.sql`.
 
 For Windows I have no clue how to setup PostgresQL. Look it up online I guess, or until I figure it out you're on your own.
 
